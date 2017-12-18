@@ -1,5 +1,6 @@
 # Code-witch
 public/*.*
+backend/content/**
 
 # Logs
 logs
