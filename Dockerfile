@@ -9,7 +9,6 @@ RUN npm install
 
 #Build webpack artifacts
 FROM node:alpine as artifacts
-LABEL Description="Code-Witch Frontend" Version="0.1" Author="IZALEU"
 WORKDIR /user/src/app
 
 #Set env args... docker compose???
@@ -27,14 +26,15 @@ COPY .babelrc .
 
 RUN npm run build
 
-#Server
+#Backend
 FROM node:carbon
-LABEL Description="Code-Witch backend" Version="0.1" Author="IZALEU"
+LABEL Description="Code-Witch" Version="0.1" Author="IZALEU"
 
 WORKDIR /user/src/app/
 
-COPY --from=artifacts /user/src/app/build public
+COPY --from=artifacts /user/src/app/public public
 COPY server.js /user/src/app/
+COPY backend /user/src/app/backend/
 
 RUN npm install express
 
