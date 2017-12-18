@@ -1,17 +1,17 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
+const index = require('./routes/index');
+const users = require('./routes/users');
 
-var app = express();
+const app = express();
 
 const port = 1234; //should match client's package.json proxy value
-const BUILD_DIR = path.resolve(__dirname, 'public');
+const BUILD_DIR = path.resolve(__dirname, './public');
 
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
@@ -24,7 +24,7 @@ const BUILD_DIR = path.resolve(__dirname, 'public');
 // app.use(cookieParser());
 
 // //serve static assets normally
- app.use(express.static(BUILD_DIR));
+app.use(express.static(BUILD_DIR, { index: false }));
 
 // // Note: order matters here! First in list will take precedence.
 // //app.use('/api/users', users);
@@ -48,22 +48,17 @@ const BUILD_DIR = path.resolve(__dirname, 'public');
 //   res.render('error');
 // });
 
-
-var path = require('path')
-
 // serve up static files
 //app.use(express.static(__dirname,{index:false}))
 
-// everything else gets index.html
-app.get('/*', function (req, res) {
+app.get('*', function (req, res) {
     console.log(req.headers)
-    var index = path.resolve(__dirname, 'index.html');
-    res.sendFile(index)
+    res.sendFile(path.join(BUILD_DIR,'index.html'))
 })
 
 app.listen(port);
 
-console.log("Listening on..." + port)
+console.log("Listening internally on..." + port)
 
 
 module.exports = app;
