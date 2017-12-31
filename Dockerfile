@@ -9,14 +9,14 @@ RUN npm install
 
 #Build webpack artifacts
 FROM node:alpine as artifacts
-WORKDIR /user/src/app
+WORKDIR /srv/www/src/app
 
 #Set env args... docker compose???
 ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
 
 #Copy over dependencies
-COPY --from=modules /user/src/app/node_modules node_modules
+COPY --from=modules /srv/www/src/app/node_modules node_modules
 COPY src ./src
 COPY package.json .
 COPY webpack.config.js .
@@ -30,11 +30,11 @@ RUN npm run build
 FROM node:carbon
 LABEL Description="Code-Witch" Version="0.1" Author="IZALEU"
 
-WORKDIR /user/src/app/
+WORKDIR /srv/www/src/app/
 
-COPY --from=artifacts /user/src/app/public public
-COPY server.js /user/src/app/
-COPY backend /user/src/app/backend/
+COPY --from=artifacts /srv/www/src/app/public public
+COPY server.js /srv/www/src/app/
+COPY backend /srv/www/src/app/backend/
 
 RUN npm install express
 
