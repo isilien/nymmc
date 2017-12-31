@@ -42,7 +42,14 @@ var config = {
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('css-loader','style-loader')
+                exclude: THIRDPARTY_DIR,
+                use: ExtractTextPluginConfig.extract({
+                    use: [{
+                        loader: 'css-loader'
+                    }],
+                    // use style-loader in development
+                    fallback: 'style-loader'
+                })
             },
             {
                 test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
@@ -67,7 +74,11 @@ var config = {
         compress: true,
         port: 5678,
         hot: true,
-        proxy: { '**': 'http://localhost:1234/' }
+        proxy: { '**': 'http://localhost:1234/' },
+        publicPath: '/',
+        historyApiFallback: {
+            index: '/index.html'
+        }
     }
 };
 
