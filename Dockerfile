@@ -14,7 +14,7 @@ COPY --from=modules /srv/www/node_modules node_modules
 COPY src ./src
 COPY package*.json ./
 COPY webpack.*.js ./
-COPY .eslintrc.json .
+COPY .eslintrc .
 COPY .babelrc .
 
 # runs webpack build
