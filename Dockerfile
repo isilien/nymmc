@@ -26,6 +26,7 @@ LABEL Description="Code-Witch" Version="0.1" Author="IZALEU"
 WORKDIR /srv/www
 
 COPY --from=artifacts /srv/www/public ./public
+COPY backend backend/
 
 RUN npm install express
 #RUN npm install http-proxy-middleware
