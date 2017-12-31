@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "webpack-dev-server --progress --colors",
     "dev-start": "node server.js",
-    "build": "webpack -p --progress --profile --colors && ls -a",
+    "dist": "webpack -p --progress --profile --colors && ls -a",
     "lint": "./node_modules/eslint/bin/eslint.js . --fix"
   },
   "dependencies": {

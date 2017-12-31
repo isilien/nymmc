@@ -1,43 +1,36 @@
-#Install dependencies
-FROM node:alpine as modules
-WORKDIR /user/src/app
+# fetch npm modules on the 'big' node image, which enables git
+FROM node:latest as modules
+WORKDIR /srv/www
 
-#Copy over package.json and package-lock.json
+# todo: find out why npm install --only=prod/dev isn't working
 COPY package*.json ./
-
 RUN npm install
 
-#Build webpack artifacts
+# create build artifacts using dependencies from modules
 FROM node:alpine as artifacts
-WORKDIR /srv/www/src/app
+WORKDIR /srv/www
 
-#Set env args... docker compose???
-ARG NODE_ENV
-ENV NODE_ENV $NODE_ENV
-
-#Copy over dependencies
-COPY --from=modules /srv/www/src/app/node_modules node_modules
+COPY --from=modules /srv/www/node_modules node_modules
 COPY src ./src
-COPY package.json .
-COPY webpack.config.js .
-
-COPY .eslintrc .
+COPY package*.json ./
+COPY webpack.*.js ./
+COPY .eslintrc.json .
 COPY .babelrc .
 
-RUN npm run build
+# runs webpack build
+RUN npm run-script dist
 
-#Backend
-FROM node:carbon
+# copy build artifacts and start the server
+FROM node:alpine
 LABEL Description="Code-Witch" Version="0.1" Author="IZALEU"
+WORKDIR /srv/www
 
-WORKDIR /srv/www/src/app/
-
-COPY --from=artifacts /srv/www/src/app/public public
-COPY server.js /srv/www/src/app/
-COPY backend /srv/www/src/app/backend/
+COPY --from=artifacts /srv/www/public ./public
 
 RUN npm install express
+#RUN npm install http-proxy-middleware
 
-EXPOSE 1234
+COPY server.js ./server.js
+#COPY environment ./environment/
 
 CMD ["node", "server.js"]
