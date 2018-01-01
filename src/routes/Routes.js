@@ -9,7 +9,7 @@ import { history } from '../core/configureStore';
 
 // Components
 import Home from '../pages/home';
-import {Placeholder} from '../sharedComponents'
+import {Header, Placeholder} from '../sharedComponents'
 import Blog from '../pages/blog';
 
 const HOME_COMPONENT = process.env.NODE_ENV === 'production' ? Placeholder : Home;
@@ -29,7 +29,10 @@ class Routes extends Component {
         )
         return (
             <ConnectedRouter history={history}>
-                {routes}
+                <div>
+                    <Header/>
+                    {routes}
+                </div>
             </ConnectedRouter>
         );
     }
