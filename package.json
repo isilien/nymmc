@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --progress --colors",
+    "dev": "NODE_ENV=development webpack-dev-server --progress --colors",
     "dev-start": "node server.js",
-    "dist": "webpack -p --progress --profile --colors && ls -a",
+    "dist": "NODE_ENV=production webpack -p --progress --profile --colors && ls -a",
     "lint": "./node_modules/eslint/bin/eslint.js . --fix"
   },
   "dependencies": {
