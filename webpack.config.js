@@ -5,6 +5,7 @@ var path = require('path');
 var BUILD_DIR = path.resolve(__dirname, 'public');
 
 var APP_DIR = path.resolve(__dirname, 'src/');
+var IMAGES_DIR = path.resolve(__dirname, 'src/assets/images');
 var THIRDPARTY_DIR = path.resolve(__dirname, 'node_modules/');
 
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -65,6 +66,10 @@ var config = {
         new CopyWebpackPlugin([{
             from: path.join(APP_DIR, '/index.html'),
             to: path.join(BUILD_DIR, '/index.html')
+        }]),
+        new CopyWebpackPlugin([{
+            from: IMAGES_DIR,
+            to: BUILD_DIR
         }]),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),

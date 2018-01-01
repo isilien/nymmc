@@ -29,6 +29,7 @@ COPY --from=artifacts /srv/www/public ./public
 COPY backend backend/
 
 RUN npm install express
+RUN npm install serve-favicon
 #RUN npm install http-proxy-middleware
 
 COPY server.js ./server.js

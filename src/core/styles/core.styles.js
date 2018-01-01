@@ -1,3 +1,5 @@
+//colors: https://coolors.co/232b42-a38660-c69645-8b9396-d5e1e8
+
 import styled, { injectGlobal } from 'styled-components';
 
 // Root Component Container
@@ -9,7 +11,6 @@ injectGlobal`
 /* Fonts */
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
 
-/* Basic Reset */
 html {
     background: #232B42;
     color: #D5E1E8;

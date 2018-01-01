@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const favicon = require('serve-favicon')
 
 const SERVER_FILES = path.resolve(__dirname, 'backend');
 const BUILD_DIR = path.resolve(__dirname, 'public');
@@ -18,8 +19,11 @@ app.set('view engine', 'jade');
 // //serve static assets normally
 app.use(express.static(BUILD_DIR, { index: false }));
 
+
 // Note: order matters here! First in list will take precedence.
 app.use('/api/blogs', blogs);
+
+app.use(favicon(path.join(BUILD_DIR, 'favicon.ico')))
 
 app.get('*', function (req, res) {
     console.log(req.headers)
