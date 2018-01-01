@@ -9,7 +9,10 @@ import { history } from '../core/configureStore';
 
 // Components
 import Home from '../pages/home';
+import {Placeholder} from '../sharedComponents'
 import Blog from '../pages/blog';
+
+const HOME_COMPONENT = process.env.NODE_ENV === 'production' ? Placeholder : Home;
 
 class Routes extends Component {
     constructor(props) {
@@ -20,7 +23,7 @@ class Routes extends Component {
 
         const routes = (
             <div>
-                <Route component={Home} exact path="/" />
+                <Route component={HOME_COMPONENT} exact path="/" />
                 <Route component={Blog} path="/blog" />
             </div>
         )
