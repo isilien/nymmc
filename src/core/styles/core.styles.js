@@ -1,4 +1,7 @@
 //colors: https://coolors.co/232b42-a38660-c69645-8b9396-d5e1e8
+//Gold and dark gold used for links, dividers
+//Silver and gray used for body text
+//Dark blue for BG only
 
 import styled, { injectGlobal } from 'styled-components';
 
