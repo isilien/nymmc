@@ -3,10 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development webpack-dev-server --progress --colors",
-    "dev-build": "NODE_ENV=development webpack --progress --profile --colors",
+    "dev": "NODE_ENV=development webpack-dev-server --config webpack.config.dev.js --progress --colors",
+    "dev-build": "NODE_ENV=development webpack --config webpack.config.dev.js --progress --profile --colors",
     "start": "node ./backend/server.js",
-    "build": "NODE_ENV=production webpack -p --progress --profile --colors",
+    "server-install": "npm install --prefix ./backend/",
+    "build": "NODE_ENV=production webpack --config webpack.config.prod.js -p --progress --profile --colors",
     "lint": "./node_modules/eslint/bin/eslint.js . --fix"
   },
   "dependencies": {
@@ -14,6 +15,7 @@
     "babel-eslint": "^8.0.0",
     "babel-jest": "20.0.3",
     "babel-loader": "^7.1.2",
+    "babel-plugin-react-css-modules": "^3.3.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-polyfill": "^6.0.16",
     "babel-preset-es2015": "^6.24.1",
@@ -44,6 +46,7 @@
     "promise": "8.0.1",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
+    "react-css-modules": "^4.7.1",
     "react-dev-utils": "3.1.1",
     "react-dom": "^15.6.1",
     "react-hot-loader": "^3.1.3",
@@ -68,6 +71,7 @@
     "webpack": "^3.9.1",
     "webpack-dev-server": "^2.9.5",
     "webpack-manifest-plugin": "1.3.2",
+    "webpack-merge": "^4.1.1",
     "whatwg-fetch": "2.0.3"
   }
 }

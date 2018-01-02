@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { Container } from './styles/core.styles';
 import Routes from '../routes';
 import { store } from './configureStore';
 
@@ -10,13 +9,9 @@ class Root extends Component {
     }
     render() {
         return (
-            <Container>
-
-                <Provider store={store}>
-                    <Routes />
-                </Provider>
-            </Container>
-
+            <Provider store={store}>
+                <Routes />
+            </Provider>
         );
     }
 }

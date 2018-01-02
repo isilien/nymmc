@@ -19,7 +19,6 @@ app.set('view engine', 'jade');
 // //serve static assets normally
 app.use(express.static(BUILD_DIR, { index: false }));
 
-
 // Note: order matters here! First in list will take precedence.
 app.use('/api/blogs', blogs);
 

@@ -12,9 +12,6 @@ import Home from '../pages/home';
 import {Header, Placeholder} from '../sharedComponents'
 import Blog from '../pages/blog';
 
-//TODO: move this to home component!
-const HOME_COMPONENT = process.env.NODE_ENV === 'production' ? Placeholder : Home;
-
 class Routes extends Component {
     constructor(props) {
         super(props);
@@ -24,15 +21,15 @@ class Routes extends Component {
 
         const routes = (
             <div>
-                <Route component={HOME_COMPONENT} exact path="/" />
+                <Header />
+                <Route component={Home} exact path="/" />
                 <Route component={Blog} path="/blog" />
             </div>
         )
         return (
             <ConnectedRouter history={history}>
                 <div>
-                    <Header/>
-                    {routes}
+                    {process.env.NODE_ENV !== 'production' ? Placeholder : routes}
                 </div>
             </ConnectedRouter>
         );
