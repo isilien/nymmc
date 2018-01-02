@@ -21,6 +21,8 @@ const merge = require('webpack-merge');
 const common = require('./webpack.config.common.js');
 
 var config = {
+    entry: [APP_DIR + '/index.js',
+        APP_DIR + '/core/styles/index.css'],
     output: {
         path: BUILD_DIR,
     },
@@ -36,7 +38,6 @@ var config = {
             to: BUILD_DIR
         }]),
         new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)})
     ]
 };

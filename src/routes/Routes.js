@@ -15,6 +15,7 @@ import Blog from '../pages/blog';
 class Routes extends Component {
     constructor(props) {
         super(props);
+        console.log(Placeholder)
     }
 
     render() {
@@ -29,7 +30,7 @@ class Routes extends Component {
         return (
             <ConnectedRouter history={history}>
                 <div>
-                    {process.env.NODE_ENV !== 'production' ? Placeholder : routes}
+                    {process.env.NODE_ENV === 'production' ? <Route component={Placeholder} exact path="/" /> : routes}
                 </div>
             </ConnectedRouter>
         );

@@ -1,31 +1,9 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
+import styles from './Placeholder.css'
 import mark from '../assets/images/mark.svg'
 import CircleType from 'circletype';
 
 const RADIUS = 220
-
-const PlaceholderContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 400px;
-    height: 400px;
-    margin-top: -200px;
-  margin-left: -200px;
-`
-const StyledPlaceholder = styled.div`
-   flex: auto;
-   font-size: xx-large;
-`
-
-const StyledImage = styled.div`
-    width: 256px;
-    height: 256px;
-`
 
 class Placeholder extends Component {
     constructor(props){
@@ -39,17 +17,17 @@ class Placeholder extends Component {
 
     render() {
         return (
-            <PlaceholderContainer className="placeholder">
-                <StyledPlaceholder id='placetext-top'>
+            <div className={styles.container}>
+                <div id='placetext-top' className={styles.text}>
                     pardon our fairy dust
-                </StyledPlaceholder>   
-                <StyledImage>
+                </div>   
+                <div className={styles.image}>
                     <img src={mark}/>
-                </StyledImage>
-                <StyledPlaceholder id='placetext-bottom'>
+                </div>
+                <div id='placetext-bottom' className={styles.text}>
                     witchery in progress                    
-                </StyledPlaceholder>   
-            </PlaceholderContainer>
+                </div>   
+            </div>
         )
     }
 }

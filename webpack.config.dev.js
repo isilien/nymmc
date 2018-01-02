@@ -21,6 +21,11 @@ const merge = require('webpack-merge');
 const common = require('./webpack.config.common.js');
 
 var config = {
+    entry: [
+        'react-hot-loader/patch',
+        APP_DIR + '/index.js',
+        APP_DIR + '/core/styles/index.css',
+    ],
     output: {
         path: BUILD_DIR,
     },

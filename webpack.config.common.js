@@ -15,10 +15,6 @@ var ExtractTextPluginConfig = new ExtractTextPlugin({
 });
 
 module.exports = {
-    entry: [
-        APP_DIR + '/index.js',
-        APP_DIR + '/core/styles/index.css'
-    ],
     output: {
         filename: 'build.js',
         publicPath: '/',
