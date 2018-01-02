@@ -7,7 +7,14 @@ class BlogContent extends Component {
     }
 
     render () {
-        return <div/>
+        const {content} = this.props;
+        return (
+            <div>
+            <h1>{content.title}</h1>
+            <h2>author: IZALEU posted:{content.publish_date}</h2>
+            <p>{content.body}</p>
+            </div>
+        )
     }
 }
 
