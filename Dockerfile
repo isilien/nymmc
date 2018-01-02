@@ -29,5 +29,5 @@ COPY backend ./
 COPY --from=artifacts /srv/www/public public/
 
 RUN npm install
-
+ENV NODE_ENV=production
 CMD ["node", "server.js"]

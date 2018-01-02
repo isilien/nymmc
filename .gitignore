@@ -2,6 +2,7 @@
 backend/public
 public/*.*
 backend/content/**
+data/
 
 # Logs
 logs

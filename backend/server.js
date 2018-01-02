@@ -39,7 +39,8 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
 // Connection URL
-const url = 'mongodb://cauldron:27017';
+const serviceOrHostname = (process.env.NODE_ENV !== undefined) ? 'cauldron' : 'localhost';
+const url = `mongodb://${serviceOrHostname}:27017`
 
 // Database Name
 const dbName = 'myproject';
@@ -47,7 +48,7 @@ const dbName = 'myproject';
 // Use connect method to connect to the server
 MongoClient.connect(url, function (err, client) {
     assert.equal(null, err);
-    console.log("Connected successfully to server");
+    console.log("Connected successfully to mongodb server");
 
     const db = client.db(dbName);
 
