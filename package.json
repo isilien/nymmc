@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "NODE_ENV=development webpack-dev-server --progress --colors",
-    "dev-start": "node server.js",
-    "dist": "NODE_ENV=production webpack -p --progress --profile --colors && ls -a",
+    "dev-build": "NODE_ENV=development webpack --progress --profile --colors",
+    "start": "node ./backend/server.js",
+    "build": "NODE_ENV=production webpack -p --progress --profile --colors",
     "lint": "./node_modules/eslint/bin/eslint.js . --fix"
   },
   "dependencies": {

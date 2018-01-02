@@ -18,18 +18,16 @@ COPY .eslintrc .
 COPY .babelrc .
 
 # runs webpack build
-RUN npm run-script dist
+RUN npm run-script build
 
 # copy build artifacts and start the server
 FROM node:alpine
-LABEL Description="Code-Witch" Version="0.1" Author="IZALEU"
+LABEL Description="code-witch" Version="0.1" Author="IZALEU"
 WORKDIR /srv/www/backend
 
 COPY backend ./
 COPY --from=artifacts /srv/www/public public/
 
 RUN npm install
-
-COPY server.js ./server.js
 
 CMD ["node", "server.js"]
