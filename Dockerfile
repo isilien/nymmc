@@ -28,11 +28,8 @@ WORKDIR /srv/www
 COPY --from=artifacts /srv/www/public ./public
 COPY backend backend/
 
-RUN npm install express
-RUN npm install serve-favicon
-#RUN npm install http-proxy-middleware
+RUN npm install --prefix ./backend
 
 COPY server.js ./server.js
-#COPY environment ./environment/
 
 CMD ["node", "server.js"]
