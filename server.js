@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon')
 
-const SERVER_FILES = path.resolve(__dirname, 'backend');
+const SERVER_FILES = path.resolve(__dirname);
 const BUILD_DIR = path.resolve(__dirname, 'public');
 
 const index = require(path.join(SERVER_FILES,'./routes/index'));
@@ -33,5 +33,26 @@ app.get('*', function (req, res) {
 app.listen(PORT);
 
 console.log("Listening internally on..." + PORT)
+
+//DB stuffs
+
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+
+// Connection URL
+const url = 'mongodb://cauldron:27017';
+
+// Database Name
+const dbName = 'myproject';
+
+// Use connect method to connect to the server
+MongoClient.connect(url, function (err, client) {
+    assert.equal(null, err);
+    console.log("Connected successfully to server");
+
+    const db = client.db(dbName);
+
+    client.close();
+});
 
 module.exports = app

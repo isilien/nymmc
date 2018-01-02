@@ -23,12 +23,12 @@ RUN npm run-script dist
 # copy build artifacts and start the server
 FROM node:alpine
 LABEL Description="Code-Witch" Version="0.1" Author="IZALEU"
-WORKDIR /srv/www
+WORKDIR /srv/www/backend
 
-COPY --from=artifacts /srv/www/public ./public
-COPY backend backend/
+COPY backend ./
+COPY --from=artifacts /srv/www/public public/
 
-RUN npm install --prefix ./backend
+RUN npm install
 
 COPY server.js ./server.js
 
