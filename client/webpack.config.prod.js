@@ -25,7 +25,6 @@ var config = {
     output: {
         path: BUILD_DIR,
     },
-    entry: [APP_DIR + '/index.js'],
     plugins: [
         ExtractTextPluginConfig,
         new CopyWebpackPlugin([{
