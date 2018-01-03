@@ -38,14 +38,17 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                exclude: THIRDPARTY_DIR,
-                use: ExtractTextPluginConfig.extract({
-                    use: [{
-                        loader: 'css-loader'
+                exclude: /node_modules/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true,
+                            // This matches the babel plugin's setting
+                            localIdentName: '[path]___[name]__[local]___[hash:base64:5]', 
+                        }
                     }],
-                    // use style-loader in development
-                    fallback: 'style-loader'
-                })
             },
             {
                 test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
