@@ -26,7 +26,7 @@ class Routes extends Component {
         return (
             <ConnectedRouter history={history}>
                 <div>
-                    {process.env.NODE_ENV !== 'production' ? <Route component={Placeholder} exact path="/" /> : routes}
+                    {process.env.NODE_ENV === 'production' ? <Route component={Placeholder} exact path="/" /> : routes}
                 </div>
             </ConnectedRouter>
         );
