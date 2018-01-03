@@ -2,8 +2,7 @@
 var webpack = require('webpack');
 var path = require('path');
 
-var BUILD_DIR = path.resolve(__dirname, 'public');
-
+var BUILD_DIR = path.resolve(__dirname, '../backend/public');
 var APP_DIR = path.resolve(__dirname, 'src/');
 var IMAGES_DIR = path.resolve(__dirname, 'src/assets/images');
 var THIRDPARTY_DIR = path.resolve(__dirname, 'node_modules/');
@@ -21,12 +20,14 @@ const merge = require('webpack-merge');
 const common = require('./webpack.config.common.js');
 
 var config = {
-    entry: [APP_DIR + '/index.js',
-        APP_DIR + '/core/styles/index.css'],
+    entry: [
+        'react-hot-loader/patch',
+        APP_DIR + '/index.js',
+        APP_DIR + '/core/styles/index.css',
+    ],
     output: {
         path: BUILD_DIR,
     },
-    entry: [APP_DIR + '/index.js'],
     plugins: [
         ExtractTextPluginConfig,
         new CopyWebpackPlugin([{
@@ -38,8 +39,20 @@ var config = {
             to: BUILD_DIR
         }]),
         new webpack.NamedModulesPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)})
-    ]
+    ],
+    devServer: {
+        contentBase: BUILD_DIR,
+        compress: true,
+        port: 5678,
+        hot: true,
+        proxy: { '**': 'http://localhost:1234/' },
+        publicPath: '/',
+        historyApiFallback: {
+            index: '/index.html'
+        }
+    }
 };
 
 module.exports = merge(common, config);
