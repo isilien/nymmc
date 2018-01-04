@@ -33,11 +33,10 @@ class Blog extends Component {
 
     render() {
         const { blogs } = this.state
-        const elements = (blogs && blogs.length) ? blogs.map(content => <BlogContent content={content} key={content._id} />) : 'No posts';
+        const elements = (blogs && blogs.length) ? blogs.map(content => <BlogContent content={content} key={content._id} />) : <div>Click <a onClick={this.handlePost}>here</a> to add a new post.</div>;
         return (
             <div id="home-content">
                 {elements}
-                <div>Click <a onClick={this.handlePost}>here</a> to add a new post.</div>
             </div>
         )
     }
