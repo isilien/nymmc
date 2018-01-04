@@ -39,8 +39,8 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
 // Connection URL
-const serviceOrHostname = (process.env.NODE_ENV !== undefined) ? 'cauldron' : 'localhost';
-const url = `mongodb://${serviceOrHostname}:27017`
+const serviceOrHostname = (process.env.NODE_ENV !== undefined) ? 'cauldron' : 'localhost:27017';
+const url = `mongodb://${serviceOrHostname}`
 
 // Database Name
 const dbName = 'myproject';
