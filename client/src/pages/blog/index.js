@@ -26,7 +26,8 @@ class Blog extends Component {
                 _id: "2",
                 title: "The Golden Falcon",
                 publish_date: "2018-01-07",
-                author: "IZALEU"
+                author: "IZALEU",
+                body: "Once upon a time, there was a..."
             }])
         }).then(this.getPosts())
     }
