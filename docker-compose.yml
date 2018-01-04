@@ -4,9 +4,9 @@ services:
     image: izaleu/code-witch:latest
     container_name: luna
     links:
-      - db
+      - cauldron
     depends_on:
-      - db
+      - cauldron
     ports:
       - 1234:1234
   cauldron:
