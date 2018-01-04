@@ -47,12 +47,14 @@ const dbName = 'myproject';
 
 // Use connect method to connect to the server
 MongoClient.connect(url, function (err, client) {
-    assert.equal(null, err);
-    console.log("Connected successfully to mongodb server");
+    if (err === null) {
+        console.log("Connected successfully to mongodb server");
+        const db = client.db(dbName);
 
-    const db = client.db(dbName);
-
-    client.close();
+        client.close();
+    } else {
+        console.log(err)
+    }
 });
 
 module.exports = app
