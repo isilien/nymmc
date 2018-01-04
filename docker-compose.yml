@@ -3,6 +3,8 @@ services:
   luna:
     image: izaleu/code-witch:latest
     container_name: luna
+    environment:
+      - NODE_ENV=production
     links:
       - cauldron
     depends_on:
@@ -13,9 +15,9 @@ services:
     image: mongo:latest
     container_name: "cauldron"
     environment:
-      - MONGO_DATA_DIR=/data/db
+      - MONGO_DATA_DIR=/backend/data/db
     volumes:
-      - ./data/db:/data/db
+      - ./backend/data/db:/backend/data/db
     ports:
       - 27017:27017
     command: mongod --smallfiles

@@ -11,17 +11,15 @@ FROM node:alpine as artifacts
 WORKDIR /srv/www/client
 
 COPY --from=modules /srv/www/client/node_modules node_modules
-COPY client/src ./
+COPY client ./
 
-# runs webpack build
+# runs webpack build in production mode
 RUN npm run-script build
 
 # copy build artifacts and start the server
 FROM node:alpine
 LABEL Description="code-witch" Version="0.1" Author="IZALEU"
 WORKDIR /srv/www/backend
-
-ENV NODE_ENV=production
 
 COPY backend ./
 COPY --from=artifacts /srv/www/client/public public/

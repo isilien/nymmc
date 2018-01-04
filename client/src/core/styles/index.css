@@ -1,12 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
 
-html {
-    background: #232B42;
+body {
+    margin: 0;
+    padding:0;
+    font-family:'Lato',sans-serif;
     color: #D5E1E8;
+    background: #232B42;
 }
 
 /* unvisited link */
-a:link {
+a {
     color: #C69645;
 }
 
@@ -27,10 +30,4 @@ a:active {
 
 *, *:before, *:after {
     box-sizing: inherit;
-}
-
-body {
-    margin: 0;
-    padding:0;
-    font-family:'Lato',sans-serif;
 }

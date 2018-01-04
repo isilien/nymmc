@@ -16,6 +16,7 @@ const CONTENT_PATH = path.resolve(__dirname, '../content');
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
+const MONGO_SERVICE_NAME = 'cauldron'
 const serviceOrHostname = PRODUCTION ? MONGO_SERVICE_NAME : 'localhost:27017';
 const dbName = PRODUCTION ? MONGO_SERVICE_NAME : 'local-mongo';
 const url = `mongodb://${serviceOrHostname}`
