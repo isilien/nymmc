@@ -5,8 +5,6 @@
   "scripts": {
     "dev": "NODE_ENV=development webpack-dev-server --config webpack.config.dev.js --progress --colors",
     "dev-build": "NODE_ENV=development webpack --config webpack.config.dev.js --progress --profile --colors",
-    "start": "node ../backend/server.js",
-    "server-install": "npm install --prefix ../backend/",
     "build": "NODE_ENV=production webpack --config webpack.config.prod.js -p --progress --profile --colors",
     "lint": "./node_modules/eslint/bin/eslint.js . --fix"
   },

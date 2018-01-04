@@ -10,9 +10,9 @@ class BlogContent extends Component {
         const {content} = this.props;
         return (
             <div>
-            <h1>{content.title}</h1>
-            <h2>author: IZALEU posted:{content.publish_date}</h2>
-            <p>{content.body}</p>
+                <h1>{content.title}</h1>
+                <h2>author: IZALEU posted:{content.publish_date}</h2>
+                <p>{content.body}</p>
             </div>
         )
     }
@@ -21,3 +21,5 @@ class BlogContent extends Component {
 BlogContent.propTypes = {
     content : PropTypes.object.isRequired
 }
+
+export default BlogContent

@@ -11,11 +11,7 @@ FROM node:alpine as artifacts
 WORKDIR /srv/www/client
 
 COPY --from=modules /srv/www/client/node_modules node_modules
-COPY client/src ./src
-COPY client/package*.json ./
-COPY client/webpack.*.js ./
-COPY client/.eslintrc .
-COPY client/.babelrc .
+COPY client/src ./
 
 # runs webpack build
 RUN npm run-script build
@@ -29,7 +25,7 @@ ENV NODE_ENV=production
 
 COPY backend ./
 COPY --from=artifacts /srv/www/client/public public/
-RUN mkdir data && mkdir logs
+RUN mkdir -p data
 
 RUN npm install
 CMD ["node", "server.js"]

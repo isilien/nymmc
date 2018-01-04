@@ -5,27 +5,17 @@ import BlogContent from './components/BlogContent'
 class Blog extends Component {
     constructor(props) {
         super(props);
-        this.state = {contents: null}
+        this.state = {}
     }
     componentDidMount() {
-
-        fetch('api/blogs', {
-            headers: {
-                content: 'adventure_1'
-            }
-        })
-            .then(res => res.text())
-            .then(blogs => this.setState({ contents: blogs }));
+        fetch('api/blogs')
+            .then(res => res.json())
+            .then(blogs => this.setState({ blogs: blogs }));
     }
-    render() {
-        const { contents } = this.state
-        let blogs;
-        console.log(contents)
-        if (contents !== null) {
-            blogs = contents.map(content => <BlogContent content={content} key={content.id} />)
-        }
-        const elements = (this.state) ? 'No posts' : blogs;
 
+    render() {
+        const { blogs } = this.state
+        const elements = (blogs) ? blogs.map(content => <BlogContent content={content} key={content._id} />) : 'No posts';
         return (
             <div id="home-content">
                 {elements}
