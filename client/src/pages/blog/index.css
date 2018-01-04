@@ -1,29 +1,17 @@
-.home {
-  text-align: center;
+.blog {
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
+    margin-right: 40px;
 }
 
-.home-logo {
-  animation: home-logo-spin infinite 20s linear;
-  height: auto;
-  widows: 100%;
+.blogContent {
+    margin-bottom: 40px;
+    flex: auto;
 }
 
-.home-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.home-title {
-  font-size: 1.5em;
-}
-
-.home-intro {
-  font-size: large;
-}
-
-@keyframes home-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+iframe {
+    width: 100%;
+    min-height: 500px;
+    height: 100%;
 }

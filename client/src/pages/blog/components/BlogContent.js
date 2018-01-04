@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styles from '../index.css';
 
 class BlogContent extends Component {
     constructor(props) {
@@ -9,10 +10,10 @@ class BlogContent extends Component {
     render () {
         const {content} = this.props;
         return (
-            <div>
-                <h1>{content.title}</h1>
-                <h2>author: IZALEU posted:{content.publish_date}</h2>
-                <p>{content.body}</p>
+            <div className={styles.blogContent}>
+                <h2>{content.title}</h2>
+                <h3>author: {content.author} posted: {content.publish_date || "2018-01-01"}</h3>
+                <iframe sandbox="allow-scripts allow-forms allow-same-origin" src="/TheGoldenHour.html"/>
             </div>
         )
     }
