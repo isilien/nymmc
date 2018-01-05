@@ -2,13 +2,12 @@ const express = require('express');
 const path = require('path');
 const router = express.Router();
 const bodyParser = require('body-parser')
-
 const app = express()
 // create application/json parser
-const jsonParser = bodyParser.json()
+const jsonParser = bodyParser.json({limit:'50mb'})
+
 // create application/x-www-form-urlencoded parser
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
-
 
 const PRODUCTION = process.env.NODE_ENV !== 'development';
 const CONTENT_PATH = path.resolve(__dirname, '../content');
@@ -28,7 +27,7 @@ router.post('*', jsonParser, function (req, res, next) {
         if (err) return next(err);
         const db = client.db(dbName)
         var collection = db.collection('blogs');
-        collection.insertMany(req.body, function (err, result) {
+        collection.insertOne(req.body, function (err, result) {
             console.log(req.body, err ? err : result)
             return res.json({ result: result});
         });
@@ -50,5 +49,6 @@ router.get('*', function (req, res, next) {
     });
 });
 
+// ROUTE: Get a blog's html file
 
 module.exports = router;

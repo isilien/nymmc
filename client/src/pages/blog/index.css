@@ -1,6 +1,6 @@
 .blog {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     margin-left: 40px;
     margin-right: 40px;
 }

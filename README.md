@@ -4,12 +4,15 @@
 Local development requires between one and three processes running, depending on what you want to work on. These must be executed in succession. The React app uses webpack-dev-server with hot reloading.
 
 1. Client only (ReactJS): `cd client && npm run dev`
-2. Client and Backend (API): `cd client && npm run dev-build` `cd backend && npm run express`
+2. Client and Backend (API): `cd client && npm run dev-build` (`dev-build` only needs to be run once, unless your static files change) `cd backend && npm run express`
 3. Client, Backend and MongoDB: `cd backend && npm run mongo`
 
 The webpack-dev-server is available at `localhost:5678`, the Express server can be accessed at `localhost:1324`.
 
-Note: ctrl-C (OSX) to terminate any of these processes
+Notes:
+
+Use ctrl-C (OSX) to terminate any of these processes
+MongoDB may fail to start in local dev if the backend/data folder has lockfiles in it, delete the lockfiles to enable Mongo to run 
 
 Local Docker development
 
