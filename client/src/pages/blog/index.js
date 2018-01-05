@@ -41,7 +41,10 @@ class Blog extends Component {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: body
-        }).then(this.setState({})).then(this.getPosts())
+        }).then( res => {
+            this.setState({});
+            this.getPosts();
+        });
     }
 
     handleChange(event) {
