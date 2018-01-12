@@ -63,6 +63,7 @@ class Blog extends Component {
                         Twine File:
                         <input 
                             type="file" 
+                            accept=".html"
                             ref={
                                 input => {
                                     this.fileInput = input;
