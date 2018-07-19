@@ -7,8 +7,10 @@
     "dev-watch": "webpack --watch --config webpack.config.dev.js --progress --colors",
     "dev-build": "webpack --config webpack.config.dev.js --progress --profile --colors",
 
-    "build": "webpack-dev-server --config webpack.config.prod.js --progress --profile --colors",
-    "lint": "./node_modules/eslint/bin/eslint.js . --fix"
+    "build": "webpack --config webpack.config.prod.js --progress --profile --colors",
+    "lint": "./node_modules/eslint/bin/eslint.js . --fix",
+
+    "deploy": "npm run-script build & firebase deploy"
   },
   "dependencies": {
     "babel-core": "6.26.0",
