@@ -7,6 +7,7 @@
     "dev-watch": "NODE_ENV=development webpack --watch --config webpack.config.dev.js --progress --colors",
     "dev-build": "NODE_ENV=development webpack --config webpack.config.dev.js --progress --profile --colors",
     "build": "NODE_ENV=production webpack --config webpack.config.prod.js -p --progress --profile --colors",
+    "win-build": "SET NODE_ENV=production & webpack --config webpack.config.prod.js -p --progress --profile --colors",
     "lint": "./node_modules/eslint/bin/eslint.js . --fix"
   },
   "dependencies": {

@@ -2,7 +2,7 @@
 var webpack = require('webpack');
 var path = require('path');
 
-var BUILD_DIR = path.resolve(__dirname, 'public');
+var BUILD_DIR = path.resolve(__dirname, '../public');
 var APP_DIR = path.resolve(__dirname, 'src/');
 var IMAGES_DIR = path.resolve(__dirname, 'src/assets/images');
 var THIRDPARTY_DIR = path.resolve(__dirname, 'node_modules/');
