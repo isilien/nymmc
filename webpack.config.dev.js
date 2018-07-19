@@ -40,14 +40,12 @@ var config = {
         }]),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)})
+        new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify('development')})
     ],
     devServer: {
         contentBase: BUILD_DIR,
         compress: true,
-        port: 5678,
         hot: true,
-        proxy: { '**': 'http://localhost:1234/' },
         publicPath: '/',
         historyApiFallback: {
             index: '/index.html'

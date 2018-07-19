@@ -38,7 +38,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                exclude: /node_modules/,
+                exclude: THIRDPARTY_DIR,
                 use: [
                     'style-loader',
                     {
