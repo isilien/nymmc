@@ -4,12 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --config webpack.config.dev.js --progress --colors",
-    "dev-watch": "webpack --watch --config webpack.config.dev.js --progress --colors",
     "dev-build": "webpack --config webpack.config.dev.js --progress --profile --colors",
-
     "build": "webpack --config webpack.config.prod.js --progress --profile --colors",
     "lint": "./node_modules/eslint/bin/eslint.js . --fix",
-
     "deploy": "npm run-script build & firebase deploy"
   },
   "dependencies": {
@@ -77,5 +74,8 @@
     "webpack-manifest-plugin": "1.3.2",
     "webpack-merge": "^4.1.1",
     "whatwg-fetch": "2.0.3"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1"
   }
 }

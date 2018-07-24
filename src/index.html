@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 
 <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-firestore.js"></script>
+<script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-auth.js"></script>
+<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" />
+
 <script>
   // Initialize Firebase
   var config = {
@@ -12,6 +18,7 @@
     messagingSenderId: "481486980487"
   };
   firebase.initializeApp(config);
+  var firestore = firebase.firestore();
 </script>
 
 <html lang="en">
