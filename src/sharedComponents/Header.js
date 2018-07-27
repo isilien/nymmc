@@ -13,7 +13,7 @@ class Header extends Component {
                     <img src={mark}/>
                 </div> 
                 <Link to="/">code-witch</Link> 
-                <Link to="/blog">stories</Link>
+                {/*<Link to="/blog">stories</Link>*/}
             </div>
             <div className={styles.divider}/>          
         </div>
