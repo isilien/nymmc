@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {markdown} from 'markdown';
 import markdownSource from '../../assets/resume.md'
 
 class Resume extends Component {

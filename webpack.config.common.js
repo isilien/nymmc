@@ -46,7 +46,15 @@ module.exports = {
             {
                 test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
                 use: 'file-loader?name=[name].[ext]&publicPath=/&outputPath=assets/'
-            }
+            },
+            { 
+                test: /\.md$/,
+                use: [
+                    'html-loader',
+                    'markdown-loader',
+                ]
+            },
+           
         ]
     },
     performance: {
