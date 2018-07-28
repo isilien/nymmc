@@ -20,7 +20,6 @@ module.exports = env => {
             path: BUILD_DIR,
         },
         plugins: [
-            ExtractTextPluginConfig,
             new CopyWebpackPlugin([{
                 from: path.join(APP_DIR, '/index.html'),
                 to: path.join(BUILD_DIR, '/index.html')
