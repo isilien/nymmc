@@ -9,7 +9,7 @@ class Header extends Component {
         return (
             <div className="nav">
                 <div className={styles.header}>
-                    <img className={styles.image} src={mark}/>
+                        <img className={styles.image} src={mark}/>
                         <Link className={styles.navLink} to="/">code-witch</Link> 
                         <Link className={styles.navLink} to="/resume">resume</Link> 
                         {/*<Link to="/blog">stories</Link>*/}
