@@ -1,4 +1,4 @@
-# D. Nelson <small><a class="fab fa-linkedin" href="https://www.linkedin.com/in/darcy-nelson-00063520/"></a></small>
+# D. Nelson <small><a class="fab fa-linkedin" target="_blank" href="https://www.linkedin.com/in/darcy-nelson-00063520/"></a></small>
 An out-of-the-box thinker who always puts the mission first. I value teamwork, craft and satisfying user experiences.
 
 ## Tech
