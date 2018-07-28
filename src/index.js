@@ -1,5 +1,4 @@
-import "regenerator-runtime/runtime";
-import { AppContainer } from 'react-hot-loader';
+import "regenerator-runtime/runtime"; //required for generator functions
 import React from 'react';
 import { render } from 'react-dom';
 
@@ -8,20 +7,13 @@ import Root from './core/rootComponent';
 // Render the app
 const renderApp = Component => {
 
-    render(
-        <AppContainer>
-            <Component/>
-        </AppContainer>,
+    render(<Component/>,
         document.getElementById('root')
     );
 };
 
 renderApp(Root);
 
-// Webpack Hot Module Replacement API
-if (process.env.NODE_ENV !== 'production' && module.hot) {
-    module.hot.accept('./core/rootComponent.js', () => { render(Root) })
-}
 // var user;
 // //firebase auth
 // var provider = new firebase.auth.GoogleAuthProvider();

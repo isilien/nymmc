@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import styles from './index.css';
 
 const options = [
-    { value: 0, label: '<10%' },
-    { value: 25, label: '10-20%' },
-    { value: 50, label: '20-70%' },
     { value: 100, label: '>70%' },
+    { value: 50, label: '20-70%' },
+    { value: 25, label: '10-20%' },
+    { value: 0, label: '<10%' },
     { value: 0, label: 'I don\'t know' }
 ];
 
@@ -60,7 +60,7 @@ class Quizlet extends Component {
 
         return (
             <div>
-                <h2>Great! Just fill out this quick questionnaire.</h2><br />
+                <h2>Want me to work for you? Tell me about your company.</h2><br />
                 <form>
                     <div className={formControlClass}>
                         <label htmlFor="q1"> What % of your company identifies as women?</label>

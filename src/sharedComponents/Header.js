@@ -8,15 +8,14 @@ class Header extends Component {
     render () {
         return (
             <div className="nav">
-                <div className={"navbar-brand " + styles.header}>
-                <img className={styles.image} src={mark}/>
-
-                    <Link className="nav-link" to="/"><h2>code-witch</h2></Link> 
-                    <Link className="nav-link" to="/resume"><h2>resume</h2></Link> 
-                    {/*<Link to="/blog">stories</Link>*/}
+                <div className={styles.header}>
+                    <img className={styles.image} src={mark}/>
+                        <Link className={styles.navLink} to="/">code-witch</Link> 
+                        <Link className={styles.navLink} to="/resume">resume</Link> 
+                        {/*<Link to="/blog">stories</Link>*/}
                 </div>
-            <div className={styles.divider}/>          
-        </div>
+                <div className={styles.divider}/>          
+            </div>
         )
     }
 }
