@@ -8,8 +8,7 @@ const options = [
     { value: 100, label: '>70%' },
     { value: 50, label: '20-70%' },
     { value: 25, label: '10-20%' },
-    { value: 0, label: '<10%' },
-    { value: 0, label: 'I don\'t know' }
+    { value: -100, label: '<10%' },
 ];
 
 const q1Weight = 1;
@@ -81,7 +80,7 @@ class Quizlet extends Component {
 
                     </div>
                     <div className="col-md-6 form-group-row">
-                        <button type="submit" className="btn" onClick={() => { this.incrementPhase() }}>Submit</button>
+                        <button className="btn" onClick={() => { this.incrementPhase() }}>Submit</button>
                         <small className="pull-right"><a data-toggle="modal" data-target="#but_why_modal">Why are you asking this?</a></small>
                         {this.getModal('but_why_modal','Q: Why this questionnaire?','A: It saves us both time by surfacing details that aren\'t usually posted on a company\'s website.','Close')}
                     </div>
@@ -116,16 +115,16 @@ class Quizlet extends Component {
 
         const score = this.calculateScore(q1,q2,q3);
         
-        if (score < 0.25) {
+        if (score < 0) {
             return this.getBadResult();
         }
-        if (score >= 0.25 && score < 0.33) {
+        if (score >= 0 && score < 0.16) {
             return this.getDecentishResult();
         }
-        if (score >= 0.33 && score < 0.41) {
+        if (score >= 0.16 && score < 0.375) {
             return this.getGoodResult();
         }
-        if (score >= 0.41) {
+        if (score >= 0.375) {
             return this.getGreatResult();
         }
     }
@@ -157,9 +156,8 @@ class Quizlet extends Component {
             <div>
                 <div>
                     <h2>It seems your company isn't a good fit for me.</h2>
-                    <a data-toggle="modal" data-target="#bad_response_modal">But, why?</a><br/>
-                    <a target="_blank" href="mailTo:darcy.nelson@code-witch.net?subject=plz be a unicorn at my company">I understand, <i>and</i> I'm willing to meet your adjusted base salary requirement of 250k/year</a><br/>
-                    <a data-toggle="modal" data-target="#bad_response_modal2">Isn't 250k a *little* steep?</a><br/>
+                        <a className="row" data-toggle="modal" data-target="#bad_response_modal">But, why?</a><br/>
+                        <button className="btn btn-warning" target="_blank" href="mailTo:darcy.nelson@code-witch.net?subject=plz be a unicorn at my company">I understand, <i>and</i> I'm willing to meet your adjusted base salary requirement of 250k/year</button>
                 </div>
                 {this.getModal('bad_response_modal', 'Reasons Why',
                     <div className="modal-body">
@@ -168,6 +166,7 @@ class Quizlet extends Component {
                         <p> ... where my colleagues and leaders think an <a target="_blank" href="http://valleywag.gawker.com/the-boards-are-all-white-charting-diversity-among-tech-1442532538">abscence</a> of people of color in the workplace is acceptable.</p>
                         <p> ... where I can be <a target="_blank" href="https://www.aauw.org/research/the-simple-truth-about-the-gender-pay-gap/">paid less</a>, mentored less and promoted less often.</p>
                         <p> Based on my personal experience, a lack of diversity leads to all these things.</p>
+                        <a data-toggle="modal" data-target="#bad_response_modal2">Isn't 250k a *little* steep?</a>
                     </div>,
                     'Ok, got it')}
 
@@ -212,7 +211,8 @@ class Quizlet extends Component {
     }
 
     calculateScore = (q1,q2,q3) => {
-        let score = (q1+q2+q3)/300;
+        let score = ((q1)+(q2)+(q3*0.5))/300;
+        console.log(score)
         return score;
     }
 
