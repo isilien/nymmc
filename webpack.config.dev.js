@@ -39,6 +39,7 @@ var config = {
         contentBase: BUILD_DIR,
         compress: true,
         hot: true,
+        open: true,
         publicPath: '/',
         historyApiFallback: {
             index: '/index.html'

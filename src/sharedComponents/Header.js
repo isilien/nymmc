@@ -8,8 +8,9 @@ class Header extends Component {
     render () {
         return (
             <div className="nav">
-                <img className="navbar-brand" src={mark}/>
-                <div className={styles.header}>
+                <div className={"navbar-brand " + styles.header}>
+                <img className={styles.image} src={mark}/>
+
                     <Link className="nav-link" to="/"><h2>code-witch</h2></Link> 
                     <Link className="nav-link" to="/resume"><h2>resume</h2></Link> 
                     {/*<Link to="/blog">stories</Link>*/}
