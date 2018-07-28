@@ -157,7 +157,7 @@ class Quizlet extends Component {
                 <div>
                     <h2>It seems your company isn't a good fit for me.</h2>
                         <a className="row" data-toggle="modal" data-target="#bad_response_modal">But, why?</a><br/>
-                        <button className="btn btn-warning" target="_blank" href="mailTo:darcy.nelson@code-witch.net?subject=plz be a unicorn at my company">I understand, <i>and</i> I'm willing to meet your adjusted base salary requirement of 250k/year</button>
+                        <a className="btn btn-warning" target="_blank" href="mailTo:darcy.nelson@code-witch.net?subject=plz be a unicorn at my company">I understand, <i>and</i> I'm willing to meet your adjusted base salary requirement of 250k/year</a>
                 </div>
                 {this.getModal('bad_response_modal', 'Reasons Why',
                     <div className="modal-body">
