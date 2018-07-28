@@ -5,8 +5,8 @@ class Home extends Component {
     render() {
         return (
             <div className="container">
-                Welcome to <Link className="nav-link" to="/">code-witch.net!</Link> <br/> 
-                This is where I put my various projects.
+                <p>Welcome to <Link className="nav-link" to="/">code-witch.net!</Link> <br/> </p>
+                <p>This is where my various projects live.</p>
             </div>
         );
     }
