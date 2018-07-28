@@ -21,9 +21,9 @@ class Quizlet extends Component {
 
         this.state = {
             phase: 0,
-            q1: 0,
-            q2: 0,
-            q3: 0
+            q1: -1,
+            q2: -1,
+            q3: -1
         }
     }
 
@@ -36,7 +36,7 @@ class Quizlet extends Component {
         this.setState({[question]:value})
     }
 
-    getSurveyContent = () => {
+    getSurveyContent = ({q1,q2,q3}) => {
         const formControlClass = "form-group col-md-6"
         
         const dark = { backgroundColor: '#292827', color: 'white'}
@@ -80,7 +80,7 @@ class Quizlet extends Component {
 
                     </div>
                     <div className="col-md-6 form-group-row">
-                        <button className="btn" onClick={() => { this.incrementPhase() }}>Submit</button>
+                        <button className={`btn`} disabled={q1 === -1 || q2 === -1 || q3 === -1} onClick={() => { this.incrementPhase() }}>Submit</button>
                         <small className="pull-right"><a data-toggle="modal" data-target="#but_why_modal">Why are you asking this?</a></small>
                         {this.getModal('but_why_modal','Q: Why this questionnaire?','A: It saves us both time by surfacing details that aren\'t usually posted on a company\'s website. (And in case you\'re wondering: no, I don\'t save this data.)','Close')}
                     </div>
@@ -104,7 +104,7 @@ class Quizlet extends Component {
                     </div>
                 );
             case 1:
-                return this.getSurveyContent();
+                return this.getSurveyContent(state);
                 
             case 2:
                 return this.getResultContent(state);
