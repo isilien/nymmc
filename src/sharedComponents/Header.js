@@ -7,12 +7,11 @@ import mark from '../assets/images/mark.svg'
 class Header extends Component {
     render () {
         return (
-            <div>
+            <div className="nav">
             <div className={styles.header}>
-                <div className={styles.image}>
-                    <img src={mark}/>
-                </div> 
-                <Link to="/">code-witch</Link> 
+                    <img className={styles.image  + " navbar-brand"} src={mark}/>
+                <Link className="nav-link" to="/"><h2>code-witch</h2></Link> 
+                <Link className="nav-link" to="/resume"><h2>resume</h2></Link> 
                 {/*<Link to="/blog">stories</Link>*/}
             </div>
             <div className={styles.divider}/>          
