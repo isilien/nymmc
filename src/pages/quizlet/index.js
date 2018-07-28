@@ -21,7 +21,7 @@ class Quizlet extends Component {
         super(props);
 
         this.state = {
-            phase: 1,
+            phase: 0,
             q1: 0,
             q2: 0,
             q3: 0
@@ -60,7 +60,7 @@ class Quizlet extends Component {
 
         return (
             <div>
-                <h2>Want me to work for you? Tell me about your company.</h2><br />
+                <h2>Great! Tell me about your company.</h2><br />
                 <form>
                     <div className={formControlClass}>
                         <label htmlFor="q1"> What % of your company identifies as women?</label>
@@ -157,9 +157,9 @@ class Quizlet extends Component {
             <div>
                 <div>
                     <h2>It seems your company isn't a good fit for me.</h2>
-                    <a data-toggle="modal" data-target="#bad_response_modal">But, why?</a><br />
-                    <a target="_blank" href="mailTo:darcy.nelson@code-witch.net?subject=plz be a unicorn at my company">I understand, <i>and</i> I'm willing to meet your adjusted base salary requirement of 250k/year</a><br />
-                    <a data-toggle="modal" data-target="#bad_response_modal2">Isn't 250k a *little* steep?</a><br />
+                    <a data-toggle="modal" data-target="#bad_response_modal">But, why?</a><br/>
+                    <a target="_blank" href="mailTo:darcy.nelson@code-witch.net?subject=plz be a unicorn at my company">I understand, <i>and</i> I'm willing to meet your adjusted base salary requirement of 250k/year</a><br/>
+                    <a data-toggle="modal" data-target="#bad_response_modal2">Isn't 250k a *little* steep?</a><br/>
                 </div>
                 {this.getModal('bad_response_modal', 'Reasons Why',
                     <div className="modal-body">
@@ -167,11 +167,12 @@ class Quizlet extends Component {
                         <p> ... where I can be harassed with <a target="_blank" href="https://www.susanjfowler.com/blog/2017/2/19/reflecting-on-one-very-strange-year-at-uber">impugnity.</a></p>
                         <p> ... where my colleagues and leaders think an <a target="_blank" href="http://valleywag.gawker.com/the-boards-are-all-white-charting-diversity-among-tech-1442532538">abscence</a> of people of color in the workplace is acceptable.</p>
                         <p> ... where I can be <a target="_blank" href="https://www.aauw.org/research/the-simple-truth-about-the-gender-pay-gap/">paid less</a>, mentored less and promoted less often.</p>
+                        <p> Based on my personal experience, a lack of diversity leads to all these things.</p>
                     </div>,
                     'Ok, got it')}
 
                 {this.getModal('bad_response_modal2', '>:[',
-                    <p>I dunno, how much is your mental health and career <a target="_blank" href="http://fortune.com/2018/03/27/uber-agrees-to-settle-discrimination-lawsuit/">worth</a>?</p>, 'Good point')}
+                    <p>I dunno, how much are your mental health and career <a target="_blank" href="http://fortune.com/2018/03/27/uber-agrees-to-settle-discrimination-lawsuit/">worth</a>?</p>, 'Good point')}
 
             </div>
         );
@@ -182,7 +183,6 @@ class Quizlet extends Component {
             <div>
                 <div>
                     <h2>Sounds cool, tell me more!</h2>
-                    <p>My base salary requirement: 140k</p>
                     <a target="_blank" href="mailTo:darcy.nelson@code-witch.net?subject=Work at my code-witch certified 'pretty darn cool' company">Send me an e-mail</a>
                 </div>
             </div>
@@ -194,7 +194,6 @@ class Quizlet extends Component {
             <div>
                 <div>
                     <h2>Sounds cool, tell me more!</h2>
-                    <p>My base salary requirement: 140k</p>
                     <a target="_blank" href="mailTo:darcy.nelson@code-witch.net?subject=Work at my code-witch certified 'pretty darn cool' company">Send me an e-mail</a>
                 </div>
             </div>
@@ -206,7 +205,6 @@ class Quizlet extends Component {
             <div>
                 <div>
                     <h2>Wow. Sounds like an *awesome* place to work!</h2>
-                    <p>My base salary requirement: 130k</p>
                     <a target="_blank" href="mailTo:darcy.nelson@code-witch.net?subject=Work at my code-witch certified AWESOME company">Please e-mail me!</a>
                 </div>
             </div>
