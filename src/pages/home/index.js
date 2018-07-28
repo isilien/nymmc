@@ -6,7 +6,7 @@ class Home extends Component {
         return (
             <div className="container">
                 Welcome to <Link className="nav-link" to="/">code-witch.net!</Link> <br/> 
-                This is where I put all of my random, miscellanous projects.
+                This is where I put my various projects.
             </div>
         );
     }
