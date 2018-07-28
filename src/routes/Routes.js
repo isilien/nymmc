@@ -25,6 +25,9 @@ class Routes extends Component {
                 <Route component={Quizlet} exact path="/quizlet" />
                 <Route component={Resume} exact path="/resume" />
                 <Route component={Home} exact path="/" />
+                <Route component={(foo)=>{return (
+                    <div className="container"><p>Honestly, I have no idea how you got here. That takes talent.</p> <br/> <p>... oh, 404 BTW</p></div>
+                )}}/>
                 {/*<Route component={Blog} path="/blog" />*/}
             </Switch>
         )
