@@ -13,7 +13,7 @@ const options = [
 
 const q1Weight = 1;
 const q2Weight = 1;
-const q3Weight = 1;
+const q3Weight = 0.5;
 
 class Quizlet extends Component {
     constructor(props) {
@@ -59,7 +59,7 @@ class Quizlet extends Component {
 
         return (
             <div>
-                <h2>Great! Tell me about your company.</h2><br />
+                <h2>Great! Tell me about your company.</h2>
                 <form>
                     <div className={formControlClass}>
                         <label htmlFor="q1"> What % of your company identifies as women?</label>
@@ -82,7 +82,7 @@ class Quizlet extends Component {
                     <div className="col-md-6 form-group-row">
                         <button className="btn" onClick={() => { this.incrementPhase() }}>Submit</button>
                         <small className="pull-right"><a data-toggle="modal" data-target="#but_why_modal">Why are you asking this?</a></small>
-                        {this.getModal('but_why_modal','Q: Why this questionnaire?','A: It saves us both time by surfacing details that aren\'t usually posted on a company\'s website.','Close')}
+                        {this.getModal('but_why_modal','Q: Why this questionnaire?','A: It saves us both time by surfacing details that aren\'t usually posted on a company\'s website. (And in case you\'re wondering: no, I don\'t save this data.)','Close')}
                     </div>
                 </form>
             </div>
@@ -211,14 +211,12 @@ class Quizlet extends Component {
     }
 
     calculateScore = (q1,q2,q3) => {
-        let score = ((q1)+(q2)+(q3*0.5))/300;
-        console.log(score)
+        let score = ((q1)+(q2)+(q3*q3Weight))/300;
         return score;
     }
 
     render() {
         const {q1,q2,q3} = this.state;
-
         this.calculateScore(q1,q2,q3)
         return (
             <div className="container">
