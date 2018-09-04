@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
+
+body {
+    margin: 0;
+    padding:0;
+    font-family:'Lato',sans-serif;
+    color: #D5E1E8;
+    background: #292827;
+}
+
+/* unvisited link */
+a {
+    color: #C69645;
+}
+
+/* visited link */
+a:visited {
+    color: #A38660;
+}
+
+/* mouse over link */
+a:hover {
+    color: #C69645;
+}
+
+/* selected link */
+a:active {
+    color: #A38660;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+iframe {
+    border:none
+}
+
+button {
+    color: #292827
+}
+
+
+._rotator_xflij_87 {
+    -webkit-animation: _spin_xflij_1 infinite 20s linear;
+            animation: _spin_xflij_1 infinite 20s linear;
+    height: auto;
+    widows: 100%;
+  }
+  
+@-webkit-keyframes _spin_xflij_1 {
+from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+  
+@keyframes _spin_xflij_1 {
+from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+  
+
+._r-select_xflij_111 {
+    color: #292827
+}
