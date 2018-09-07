@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import Routes from '../routes';
 import { store } from './configureStore';
-import styles from './styles/index.css'
 
 class Root extends Component {
     constructor(props) {
