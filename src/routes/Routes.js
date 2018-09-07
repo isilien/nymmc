@@ -10,6 +10,8 @@ import { history } from '../core/configureStore';
 
 // Components
 import Home from '../pages/home';
+import tutorial from '../pages/tutorial';
+import mission from '../pages/mission';
 
 import {Header, Footer} from '../sharedComponents'
 
@@ -19,15 +21,17 @@ class Routes extends Component {
 
         const routes = (
             <Switch>
-                <Route component={Home} exact path="/" />
-                <Route component={(foo)=>{return (
-                    <div className="container"><p>Honestly, I have no idea how you got here. That takes talent.</p> <br/> <p>... oh, 404 BTW</p></div>
+                <Route component={Home} exact path="/"/>
+                <Route component={tutorial} exact path="/tutorial" />
+                <Route component={mission} exact path="/mission/:id" />
+                <Route component={()=>{return (
+                    <div className="container">404: Not Found</div>
                 )}}/>
             </Switch>
         )
         return (
             <ConnectedRouter history={history}>
-                <div><Header/>{routes}<Footer/></div>
+                <div className="container"><Header/>{routes}<Footer/></div>
             </ConnectedRouter>
         );
     }

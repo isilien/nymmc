@@ -4,9 +4,12 @@ import { Link } from 'react-router-dom';
 class Header extends Component {
     render () {
         return (
-            <h1>
-              5-Minute Mission Control    
-            </h1>
+            <div className="my-3">
+                <h1>
+                    <Link to="/" style={{color: 'black'}}>5-Minute Mission Control</Link>
+                </h1>
+                <hr/>
+            </div>
         )
     }
 }
