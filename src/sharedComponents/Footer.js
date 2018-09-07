@@ -4,7 +4,7 @@ class Footer extends Component {
     render () {
         return (
             <div>
-            <small>Proudly <i>not</i> made with create-react-app because even I'm not *that* lazy.</small>
+            <small>Created by: Darcy Nelson, Deanna Doan and Isil Demir circa 2018</small>
             </div>
         )
     }
