@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
-
+import { connect } from 'react-redux';
+import moment from 'moment'
 import { Link } from 'react-router-dom';
+import Countdown from 'react-countdown-now';
+
+import MissionCountdown from './countdown';
+import actionCreators from '../../modules/mission/actions'
 import './index.css'
 
-import Countdown from './countdown';
-import actionCreators from '../../modules/mission/actions'
-
-
+//TODO: make timer own component
 class Mission extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            hasStarted : false
+            hasStarted: true, isPaused: true, endTime: moment().add('1', 'm')//endTime: moment(0,'ms')
         }
     }
 
     startCountdown = () => {
-        this.setState({hasStarted: true})
+        this.setState({ hasStarted: true, isPaused: false, endTime: moment().add('1', 'm') })
     }
 
     startMission = () => {
@@ -26,24 +27,38 @@ class Mission extends Component {
     }
 
     onMissionPause = () => {
-
+        this.setState({ isPaused: !this.state.isPaused })
     }
 
     onTimerEnd = () => {
-        //you lose
+        //you lose!
+        //TODO: show game over modal
+        console.log("You lose");
     }
 
     render() {
+        const { id } = this.props.match.params;
+        const { endTime, startTime, hasStarted, isPaused } = this.state;
 
-        const {id} = this.props.match.params;
-        const {hasStarted} = this.state;
         return (
             <div className="container">
                 <div className="subheader">
-                    <h2>Mission {id} <Link className="btn btn-success" to="/"><i className="fas fa-arrow-left"/> Back</Link></h2>
-                    </div>
+                    <h2>Mission {id}</h2>
+                </div>
                 <div className="missionContent">
-                    {!hasStarted && <Countdown startCountdown={this.startCountdown}/> }
+                    <div className="missionTimer">
+                        {/* {<button className="btn btn-secondary" data-toggle="button" onClick={this.onMissionPause}>
+                            <i className={`fas fa-${isPaused ? 'play' : 'pause'}`}/> 
+                        </button>} */}
+                        {!hasStarted ? <MissionCountdown startCountdown={this.startCountdown} /> :
+                            <div>
+                                <Countdown date={endTime.valueOf()} onComplete={this.onTimerEnd} />
+                                <button className="btn btn-danger" onClick={()=>{alert("Are you sure you want to quit?")}}><i className="fas fa-times" /> Quit</button>
+                            </div>}
+                    </div>
+                    <div className="playArea">
+                        
+                    </div>
                 </div>
             </div>
         );

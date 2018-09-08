@@ -1,0 +1,17 @@
+[
+    {
+        "id": 0, 
+        "title": "opsExample",
+        "requirements": ["ops", "ops","ops"]
+    },
+    {
+        "id": 1, 
+        "title": "devExample",
+        "requirements": ["dev", "dev","dev"]
+    },
+    {
+        "id": 2, 
+        "title": "UXExample",
+        "requirements": ["UX", "UX","UX"]
+    }
+]

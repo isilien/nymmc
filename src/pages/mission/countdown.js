@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {Component} from 'react'
 import './countdown.css'
 
-class Countdown extends React.Component {
+class MissionCountdown extends Component {
     constructor(props){
         super(props)
         this.state = { index: 0 }
@@ -49,4 +49,4 @@ class Countdown extends React.Component {
   }
 }
 
-export default Countdown;
+export default MissionCountdown;
