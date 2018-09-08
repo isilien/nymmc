@@ -6,7 +6,7 @@ class Tutorial extends Component {
     render() {
         return (
             <div className="container">
-                <span><h2>Tutorial <Link className="btn btn-success" to="/"><i class="fas fa-arrow-left"/> Back</Link></h2></span>
+                <span><h2>Tutorial <Link className="btn btn-success" to="/"><i className="fas fa-arrow-left"/> Back</Link></h2></span>
                 <ul>
                     <li>Press Start</li>
                     <li>timer counts down</li>

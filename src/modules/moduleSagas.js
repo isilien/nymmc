@@ -1,10 +1,10 @@
 import { all } from 'redux-saga/effects';
 
-import { operations as homeOperations } from './home';
+import { operations as missionOperations } from './mission';
 
 const rootSagas = function* () {
     yield all([
-        homeOperations,
+        missionOperations,
         /* ...Add module operations (sagas) here */
     ]);
 };

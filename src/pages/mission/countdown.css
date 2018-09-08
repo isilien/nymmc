@@ -1,0 +1,16 @@
+.modal-body {
+    font-weight: 400;
+    font-size: 64px;
+    font-family: sans-serif;
+    align-self: center;
+}
+
+.modal {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    z-index: 1;
+    display: block;
+}
