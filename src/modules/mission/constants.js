@@ -1,3 +1,7 @@
-const NAME = 'home';
+const NAME = 'mission';
 
-export default {NAME};
+const OPS = 'headset'
+const DEV = 'computer'
+const UX = 'drafting-compass'
+
+export default {NAME, OPS, DEV, UX};

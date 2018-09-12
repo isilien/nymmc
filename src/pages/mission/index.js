@@ -3,10 +3,14 @@ import { connect } from 'react-redux';
 import moment from 'moment'
 import { Link } from 'react-router-dom';
 import Countdown from 'react-countdown-now';
+import Draggable, {DraggableCore} from 'react-draggable'; // Both at the same time
+
 
 import MissionCountdown from './countdown';
 import actionCreators from '../../modules/mission/actions'
 import './index.css'
+import ChallengeCard from './challengeCard'
+import data from '../../assets/exampleChallengeCardData.json'
 
 //TODO: make timer own component
 class Mission extends Component {
@@ -57,7 +61,11 @@ class Mission extends Component {
                             </div>}
                     </div>
                     <div className="playArea">
-                        
+                        <div className="row challenges">
+                            <Draggable><ChallengeCard {...data[0]}/></Draggable>
+                        </div>
+                        <div className="row requirements"></div>
+                        <div className="row hand"></div>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import './countdown.css'
 
+//TODO: Move start button out
 class MissionCountdown extends Component {
     constructor(props){
         super(props)

@@ -1,0 +1,6 @@
+.challengeCard {
+    width: 150px;
+    height: 200px;
+    border: solid darkgray 1px;
+    border-radius: 25px;
+}
