@@ -2,3 +2,16 @@
     margin-left: 48px;
     background: green;
 }
+
+.resourceCard {
+    width: 150px;
+    height: 200px;
+    border: solid darkgray 1px;
+    background: darkgray;
+    border-radius: 25px;
+}
+
+.requirements {
+    height: 225px;
+    border: black 1px solid
+}

@@ -1,0 +1,17 @@
+[
+    {
+        "title": "ops",
+        "resource": "ops",
+        "amount": 1
+    },
+    {
+        "title": "dev",
+        "resource": "dev",
+        "amount": 1
+    },
+    {
+        "title": "UX",
+        "resource": "UX",
+        "amount": 1
+    }
+]
