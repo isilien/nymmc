@@ -11,6 +11,10 @@
     border-radius: 25px;
 }
 
+.paid {
+    background: gold;
+}
+
 .requirements {
     height: 225px;
     border: black 1px solid

@@ -11,7 +11,7 @@ import MissionCountdown from './countdown';
 import actionCreators from '../../modules/mission/actions'
 import './index.css'
 import ChallengeCard from './challengeCard'
-import exampleData from '../../assets/exampleChallengeCardData.json'
+const exampleChallengeCardData = require ('../../assets/exampleChallengeCardData.json')
 import resourceCardDefs from '../../assets/resourceCardDefs.json'
 import SimpleSortableList from './SimpleSortableList';
 import './card.css'
@@ -31,16 +31,17 @@ class Mission extends Component {
             hasStarted: false, 
             isPaused: true, 
             endTime: moment().add('1', 'm'),//endTime: moment(0,'ms')
-            
             hand: [], //array of resource and event cards
             drawDeck: [], //stack of cards
             resourcesPile: [], //arr of strings
             discardPile: [], //stack of cards
-            challengeDeck: exampleData,
+            challengeDeck: exampleChallengeCardData,
+            currentChallenge: [],
         }
 
         this.state.drawDeck = this.initialDeck(50);
         this.drawCards(5, this.state.drawDeck, this.state.hand);
+        this.drawCards(1, this.state.challengeDeck, this.state.currentChallenge); //normally should be 1
     }
 
     initialDeck = (size) => {
@@ -77,6 +78,8 @@ class Mission extends Component {
         let newHand = this.state.hand;
         newHand.splice(handIndex,1)
 
+        this.drawCards(1, this.state.drawDeck, this.state.hand);
+
         this.setState({resourcesPile: resourceArray, hand: newHand})
     }
 
@@ -108,6 +111,7 @@ class Mission extends Component {
         const { id } = this.props.match.params;
         const { 
             hasStarted,
+            currentChallenge,
             isPaused,
             endTime,
             hand,
@@ -116,9 +120,6 @@ class Mission extends Component {
             discardPile,
             challengeDeck,
         } = this.state;
-
-        const currentChallenge = challengeDeck[0];
-        const challengeRequirements = this.getRemainingRequirements(currentChallenge.requirements, resourcesPile);
 
         return (
             <div className="container">
@@ -136,21 +137,30 @@ class Mission extends Component {
                                 <button className="btn btn-danger" onClick={()=>{alert("Are you sure you want to quit?")}}><i className="fas fa-times" /> Quit</button>
                             </div>}
                     </div>
-                    <div className="currentChallenge">
-                        <ChallengeCard {...currentChallenge}/>
+                    <div className="currentChallenge row">
+                        {_.map(currentChallenge, challenge => <ChallengeCard {...challenge}/>)}
                     </div>
                     <div className="playArea">
                         <div className="row requirements">
                             <div className="col-12">Requirements</div>
-                            <Container
-                                className="col-12"
-                                orientation="horizontal"
-                                shouldAcceptDrop={(incoming, payload)=>incoming.groupName==="hand" && _.contains(challengeRequirements, payload.resource)}
-                            >
-                                {_.map(challengeRequirements, (requirement, index) => {
-                                    return <Draggable className="resourceCard" key={index}> {requirement} </Draggable>
-                                })}
-                            </Container>
+                            {currentChallenge && _.map(currentChallenge, challenge => {
+                                
+                                const challengeRequirements = this.getRemainingRequirements(challenge.requirements, resourcesPile);
+
+                                return (
+                                    <Container
+                                        orientation="horizontal"
+                                        shouldAcceptDrop={(incoming, payload)=>incoming.groupName==="hand" && _.contains(challengeRequirements, payload.resource)}
+                                    >
+                                        {_.map(resourcesPile, (requirement, index) => {
+                                            return <Draggable className="resourceCard paid" key={index}> {requirement} </Draggable>
+                                        })}
+                                        {_.map(challengeRequirements, (requirement, index) => {
+                                            return <Draggable className="resourceCard" key={index}> {requirement} </Draggable>
+                                        })}
+                                    </Container>
+                                )}
+                            )}
                         </div>
                         <div className="row hand">
                             <div className="col-12">Hand</div>
