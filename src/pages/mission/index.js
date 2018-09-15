@@ -88,18 +88,20 @@ class Mission extends Component {
     }
 
     getRemainingRequirements = (requirements, current) => {
-        const fakeReq = ['ops','ops','dev','dev','UX']
-        const counts = _.countBy(fakeReq);
+        const counts = _.countBy(requirements);
         const counts2 = _.countBy(current);
 
-        
         const result = _.map(Object.keys(counts), cat=> {
-            return counts[cat] - (counts2[cat] || 0)
+            const remainingAmount = counts[cat] - (counts2[cat] || 0);
+            let reconstructed = []
+            for(let i =0; i<remainingAmount;i++){
+                reconstructed.push(cat)
+            }
+            return reconstructed
         })
 
-        console.log(result)
 
-        return fakeReq;
+        return _.flatten(result);
     }
 
     render() {
@@ -118,7 +120,6 @@ class Mission extends Component {
         const currentChallenge = challengeDeck[0];
         const challengeRequirements = this.getRemainingRequirements(currentChallenge.requirements, resourcesPile);
 
-        console.log(challengeRequirements, hand, resourcesPile)
         return (
             <div className="container">
                 <div className="subheader">
