@@ -41,7 +41,7 @@ class Mission extends Component {
 
         this.state.drawDeck = this.initialDeck(50);
         this.drawCards(5, this.state.drawDeck, this.state.hand);
-        this.drawCards(1, this.state.challengeDeck, this.state.currentChallenge); //normally should be 1
+        this.drawCards(2, this.state.challengeDeck, this.state.currentChallenge); //normally should be 1
     }
 
     initialDeck = (size) => {
@@ -95,6 +95,7 @@ class Mission extends Component {
         const counts2 = _.countBy(current);
 
         const result = _.map(Object.keys(counts), cat=> {
+            if(counts2[cat] === undefined) return requirements
             const remainingAmount = counts[cat] - (counts2[cat] || 0);
             let reconstructed = []
             for(let i =0; i<remainingAmount;i++){
@@ -102,8 +103,6 @@ class Mission extends Component {
             }
             return reconstructed
         })
-
-
         return _.flatten(result);
     }
 
@@ -138,30 +137,33 @@ class Mission extends Component {
                             </div>}
                     </div>
                     <div className="currentChallenge row">
-                        {_.map(currentChallenge, challenge => <ChallengeCard {...challenge}/>)}
+                        {_.map(currentChallenge, challenge => <ChallengeCard key={challenge.id} {...challenge}/>)}
                     </div>
                     <div className="playArea">
-                        <div className="row requirements">
-                            <div className="col-12">Requirements</div>
                             {currentChallenge && _.map(currentChallenge, challenge => {
                                 
                                 const challengeRequirements = this.getRemainingRequirements(challenge.requirements, resourcesPile);
 
                                 return (
+                                <div key={challenge.id} className="row requirements">
+                                    <div className="col-12">Requirements</div>
                                     <Container
                                         orientation="horizontal"
                                         shouldAcceptDrop={(incoming, payload)=>incoming.groupName==="hand" && _.contains(challengeRequirements, payload.resource)}
                                     >
                                         {_.map(resourcesPile, (requirement, index) => {
-                                            return <Draggable className="resourceCard paid" key={index}> {requirement} </Draggable>
+                                            if(_.contains(challengeRequirements, resourcesPile[index])){
+                                                return <Draggable className="resourceCard paid" key={index}> {requirement} </Draggable>
+                                            }
                                         })}
                                         {_.map(challengeRequirements, (requirement, index) => {
                                             return <Draggable className="resourceCard" key={index}> {requirement} </Draggable>
                                         })}
                                     </Container>
+                                </div>
+
                                 )}
                             )}
-                        </div>
                         <div className="row hand">
                             <div className="col-12">Hand</div>
                             <Container
