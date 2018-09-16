@@ -6,26 +6,30 @@ import constants from '../../modules/mission/constants';
 
 //TODO: Move start button out
 class ChallengeCard extends Component {
-    constructor(props){
-        super(props)
+    getSymbolsForRequirements = (requirements) => {
+        return <div>{_.map(requirements, (item, index) => {
+            return <i key={index} className={`fas fa-${this.getSymbol(item)}`}/>
+        })}</div>
     }
 
-    getSymbolsForRequirements = (requirements) => {
-        return _.map(requirements, (item, index) => {
-            let symbolName = 'times-circle';
-            if(item==='ops') symbolName = constants.OPS;
-            if(item==='dev') symbolName = constants.DEV;
-            if(item==='ux') symbolName = constants.UX;
-
-            return <i key={index} className={`fas fa-${symbolName}`}/>
-        })
+    getSymbol = (name) => {
+        switch(name) {
+            case 'ops':
+                return constants.OPS;
+            case 'dev':
+                return constants.DEV;
+            case 'UX':
+                return constants.UX;
+            default:
+                return 'times-circle'
+        }
     }
 
     render() {
         //TODO: use ID to get img?
         const {id, title, requirements} = this.props;
         return (
-            <div className="challengeCard card" key={id}>
+            <div className="challengeCard card">
                 <div className="cardTitle">{title}</div>
                 <div className="cardSymbols">{this.getSymbolsForRequirements(requirements)}</div>
             </div>

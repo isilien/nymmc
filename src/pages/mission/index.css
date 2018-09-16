@@ -12,15 +12,22 @@
 }
 
 .challengeDeck {
-  
+    background: brown;
+    color: white;
 }
 
-.challengeCard {
- 
+.drawDeck {
+    background: cornflowerblue;
+    color: white;
 }
 
 .discardPile {
-  
+    width: 150px;
+    height: 200px;
+    border: solid black 1px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
 }
 
 .requirementsArea{
