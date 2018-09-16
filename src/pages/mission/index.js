@@ -46,7 +46,7 @@ class Mission extends Component {
 
     componentDidMount () {
         this.drawCards(5,'drawDeck', 'hand');
-        this.drawCards(1, 'challengeDeck', 'currentChallenge'); //normally should be 1
+        this.drawNewChallenge();
     }
 
     initialDeck = (size) => {
@@ -107,6 +107,11 @@ class Mission extends Component {
         this.setState({[source] : src, [destination] : dest})
     }
 
+    //side FX
+    drawNewChallenge = () => {
+        this.setState({currentChallenge: this.state.challengeDeck.pop()})
+    }
+
     getRemainingRequirements = (requirements, current) => {
         const counts = _.countBy(requirements);
         const counts2 = _.countBy(current);
@@ -133,21 +138,12 @@ class Mission extends Component {
         
     }
 
-    //side FX
-    drawChallengeCard = () => {
-        if(this.state.currentChallenge.length===0){
-            this.drawCards(1,'challengeDeck','currentChallenge');
-        }
-    }
-
     checkChallengeComplete = () => {
-          //TODO: show cool animation?
-          const {currentChallenge, resourcesPile} = this.state;
-          currentChallenge.forEach((challenge)=> {
-            if(this.getRemainingRequirements(challenge.requirements, resourcesPile).length === 0) {
-                this.onChallengeComplete(challenge);
-            }
-        })
+        //TODO: show cool animation?
+        const {currentChallenge, resourcesPile} = this.state;
+        if(this.getRemainingRequirements(currentChallenge.requirements, resourcesPile).length === 0) {
+            this.onChallengeComplete(currentChallenge);
+        }
     }
 
     //side FX
@@ -183,11 +179,12 @@ class Mission extends Component {
             challengeDeck,
         } = this.state;
 
-        if(currentChallenge.length > 0 && currentChallenge[0] === undefined) {
+        if(!currentChallenge) {
             return <div>Loading...</div>
         }
 
         const sortedHand = _.sortBy(hand,'title');
+        const challengeRequirements = this.getRemainingRequirements(currentChallenge.requirements, resourcesPile);
 
         return (
             <div className="container">
@@ -207,13 +204,14 @@ class Mission extends Component {
                     </div>
                     <div className="playArea">
                         <div className="row">
-                            <div 
+                            <button
                                 className="challengeDeck card"
-                                onClick={()=>{this.drawChallengeCard()}}
+                                disabled={!(challengeRequirements.length === 0 && challengeDeck.length > 0)}
+                                onClick={()=>{this.drawNewChallenge()}}
                             >
                                 Challenge Deck
-                            </div>
-                                {_.map(currentChallenge, challenge => <ChallengeCard key={challenge.id} {...challenge} />)}
+                            </button>
+                            <ChallengeCard {...currentChallenge} />)
                             <Container
                                 className="discardPile"
                                 orientation="horizontal"
@@ -225,24 +223,17 @@ class Mission extends Component {
                             </Container>
                         </div>
                         <div className="row requirementsArea">
-                            {_.map(currentChallenge, challenge => {
-                                const challengeRequirements = this.getRemainingRequirements(challenge.requirements, resourcesPile);
-                                return (
-                                    <Container
-                                        key={challengeRequirements}
-                                        orientation="horizontal"
-                                        shouldAcceptDrop={(incoming, payload) => this.shouldAcceptDrop(incoming, payload, challengeRequirements)}
-                                    >
-                                        {_.map(resourcesPile, (requirement, index) => {
-                                                return <div className="card paid" key={index}> {requirement} </div>
-                                        })}  
-                                        {_.map(challengeRequirements, (requirement, index) => {
-                                            return <div className="resourceCard card" key={index}> {requirement} </div>
-                                        })}
-                                    </Container>
-
-                                )
-                            })}
+                            <Container
+                                orientation="horizontal"
+                                shouldAcceptDrop={(incoming, payload) => this.shouldAcceptDrop(incoming, payload, challengeRequirements)}
+                            >
+                                {_.map(resourcesPile, (requirement, index) => {
+                                        return <div className="card paid" key={index}> {requirement} </div>
+                                })}  
+                                {_.map(challengeRequirements, (requirement, index) => {
+                                    return <div className="resourceCard card" key={index}> {requirement} </div>
+                                })}
+                            </Container>
                         </div>
                         <div className="row">
                             <Container
