@@ -20,7 +20,13 @@
     {
         "id": 3,
         "type": "challenge",
-        "title": "Everything Example",
+        "title": "Huge Example",
         "requirements": ["UX","UX","UX","UX","UX","UX","UX","UX", "dev","ops"]
-    }
+    },
+    {
+        "id": 4,
+        "type": "challenge",
+        "title": "Everythin Example",
+        "requirements": ["UX", "dev","ops"]
+    },
 ]

@@ -226,13 +226,12 @@ class Mission extends Component {
                                 </div>
                             </Container>
                         </div>
+                        <div className="row requirementsArea">
                             {_.map(currentChallenge, challenge => {
-
                                 const challengeRequirements = this.getRemainingRequirements(challenge.requirements, resourcesPile);
-
                                 return (
-                                    <div className="row" key={challenge.id}>
                                         <Container
+                                        key={challenge.id}
                                             orientation="horizontal"
                                             animationDuration={0}
                                             shouldAcceptDrop={(incoming, payload) => this.shouldAcceptDrop(incoming, payload, challengeRequirements)}
@@ -247,12 +246,10 @@ class Mission extends Component {
                                                 return <div className="resourceCard card" key={index}> {requirement} </div>
                                             })}
                                         </Container>
-                                        </div>
 
                                 )
-                            }
-                            )}
-                        
+                            })}
+                        </div>
                         <div className="row">
                             <Container
                                 className="hand"

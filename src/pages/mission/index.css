@@ -7,8 +7,7 @@
     background: gold;
 }
 
-.playArea {
-    
+.playArea { 
     background-color: #444;
 }
 
@@ -22,6 +21,10 @@
 
 .discardPile {
   
+}
+
+.requirementsArea{
+    min-height: 200px;
 }
 
 .smooth-dnd-container.horizontal {
