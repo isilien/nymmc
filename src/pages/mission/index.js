@@ -38,9 +38,7 @@ class Mission extends Component {
             challengeDeck: exampleChallengeCardData,
             currentChallenge: [],
         }
-
         this.state.drawDeck = this.initialDeck(50);
-        
     }
 
     componentDidMount () {
@@ -94,10 +92,15 @@ class Mission extends Component {
     drawCards = (amount, source, destination) => {
         let src = this.state[source];
         let dest = this.state[destination];
+
+        if(src.length === 0) {
+            console.error("Tried to draw from a source with 0 cards!",source, destination)
+        }
+        if(amount > src.length) amount = src.length;
+
         for (let i = 0; i < amount; i++) {
             dest.push(src.pop());
         }
- 
         this.setState({[source] : src, [destination] : dest})
     }
 
@@ -123,24 +126,26 @@ class Mission extends Component {
     }
 
     selectedCard = (group, card, index) => {
-
+        
     }
 
     onChallengeComplete = (challenge) => {
         const {challengeDeck} = this.state;
 
         let result = _.filter(this.state.currentChallenge, curr => curr.id!==challenge.id);
-
         this.setState({currentChallenge : result, resourcesPile: []});
 
         if(result.length === 0) {
             //try to draw a card from the challenge deck
-            if(challengeDeck.length > 0){
-                this.drawCards(1,'challengeDeck','currentChallenge');
-            } else {
+            if(challengeDeck.length === 0){
                 console.log('you win!')
             }
-        } else {
+        }
+    }
+
+    drawChallengeCard = () => {
+        if(this.state.currentChallenge.length===0){
+            this.drawCards(1,'challengeDeck','currentChallenge');
         }
     }
 
@@ -148,10 +153,14 @@ class Mission extends Component {
           //TODO: show cool animation?
           const {currentChallenge, resourcesPile} = this.state;
           currentChallenge.forEach((challenge)=> {
-            if(this.getRemainingRequirements(challenge.requirements,resourcesPile).length === 0) {
+            if(this.getRemainingRequirements(challenge.requirements, resourcesPile).length === 0) {
                 this.onChallengeComplete(challenge);
             }
         })
+    }
+
+    shouldAcceptDrop = (incoming, payload, challengeRequirements) => {
+       return incoming.groupName === "hand" && _.contains(challengeRequirements, payload.resource)
     }
 
     render() {
@@ -172,7 +181,7 @@ class Mission extends Component {
             return <div>Loading...</div>
         }
 
-        const sortedHand = _.sortBy(hand);
+        const sortedHand = _.sortBy(hand,'title');
 
         return (
             <div className="container">
@@ -191,10 +200,18 @@ class Mission extends Component {
                             </div>} */}
                     </div>
                     <div className="playArea">
-                        <div className="currentChallenge row">
-                            {_.map(currentChallenge, challenge => <ChallengeCard key={challenge.id} {...challenge} />)}
+                        <div className="currentChallenge row justify-content-start">
+                            <div className="challengeDeck">
+                                <div 
+                                    className="challengeCard mr-5"
+                                    onClick={()=>{this.drawChallengeCard()}}
+                                >
+                                    Challenge Deck
+                                </div>
                         </div>
-                        <div className="row requirements">
+                                {_.map(currentChallenge, challenge => <ChallengeCard key={challenge.id} {...challenge} />)}
+                            </div>
+                        <div className="row requirements justify-content-start">
                             {_.map(currentChallenge, challenge => {
 
                                 const challengeRequirements = this.getRemainingRequirements(challenge.requirements, resourcesPile);
@@ -204,15 +221,15 @@ class Mission extends Component {
                                         <div className="col-12">{challenge.title} requirements</div>
                                         <Container
                                             orientation="horizontal"
-                                            shouldAcceptDrop={(incoming, payload) => incoming.groupName === "hand" && _.contains(challengeRequirements, payload.resource)}
+                                            shouldAcceptDrop={(incoming, payload) => this.shouldAcceptDrop(incoming, payload, challengeRequirements)}
                                         >
-                                            {/* {_.map(resourcesPile, (requirement, index) => {
+                                            { _.map(resourcesPile, (requirement, index) => {
                                                 if (_.contains(challengeRequirements, resourcesPile[index])) {
                                                     return <Draggable className="resourceCard paid" key={index}> {requirement} </Draggable>
                                                 }
-                                            })} */}
+                                            })} 
                                             {_.map(challengeRequirements, (requirement, index) => {
-                                                return <Draggable className="resourceCard" key={index}> {requirement} </Draggable>
+                                                return <div className="resourceCard" key={index}> {requirement} </div>
                                             })}
                                         </Container>
                                     </div>
@@ -220,10 +237,10 @@ class Mission extends Component {
                                 )
                             }
                             )}</div>
-                        <div className="row hand">
+                        <div className="row hand justify-content-around">
                             <div className="col-12">Hand</div>
                             <Container
-                                className="col-12"
+                                className="col-3 col-sm-offset-3"
                                 orientation="horizontal"
                                 groupName="hand"
                                 getChildPayload={foo => sortedHand[foo]}
@@ -234,20 +251,30 @@ class Mission extends Component {
                                         <Draggable 
                                             className="card" 
                                             key={index}
-                                            onClick={this.selectedCard("hand",card, index)}
+                                            onClick={()=>{this.selectedCard("hand", card, index)}}
                                         > 
                                         {card.title} 
                                         </Draggable>
                                     )
                                 })}
                             </Container>
+                            <Container
+                                className="col-3 "
+                                orientation="horizontal"
+                                groupName="hand"
+                            >
+                                <div className="card"> 
+                                    Discard
+                                </div>
+                            </Container>
                         </div>
                         <div className="row player-controls">
                             <button 
                                 className="btn"
+                                disabled={drawDeck.length === 0}
                                 onClick={this.discardThenDraw}
                             >
-                            -3/+3
+                            Discard 3, Draw 3
                             </button>
                         </div>
                     </div>

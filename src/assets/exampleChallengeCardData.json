@@ -1,22 +1,26 @@
 [
     {
-        "id": 0, 
+        "id": 0,
+        "type": "challenge",
         "title": "opsExample",
         "requirements": ["ops", "ops","ops"]
     },
     {
-        "id": 1, 
+        "id": 1,
+        "type": "challenge",
         "title": "devExample",
         "requirements": ["dev", "dev","dev"]
     },
     {
-        "id": 2, 
+        "id": 2,
+        "type": "challenge",
         "title": "UXExample",
         "requirements": ["UX", "UX","UX"]
     },
     {
-        "id": 3, 
+        "id": 3,
+        "type": "challenge",
         "title": "AllExample",
-        "requirements": ["UX", "dev","ops"]
+        "requirements": ["UX","UX","UX","UX","UX","UX","UX","UX", "dev","ops"]
     }
 ]

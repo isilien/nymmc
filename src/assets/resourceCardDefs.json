@@ -1,16 +1,19 @@
 [
     {
         "title": "ops",
+        "type": "resource",
         "resource": "ops",
         "amount": 1
     },
     {
         "title": "dev",
+        "type": "resource",
         "resource": "dev",
         "amount": 1
     },
     {
         "title": "UX",
+        "type": "resource",
         "resource": "UX",
         "amount": 1
     }

@@ -26,3 +26,10 @@
     vertical-align: top;
     white-space: normal;
 }
+
+
+.smooth-dnd-container.horizontal {
+    white-space: nowrap;
+    display: flex;
+    flex-wrap: wrap
+}
