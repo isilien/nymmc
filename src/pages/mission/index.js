@@ -6,14 +6,12 @@ import { Link } from 'react-router-dom';
 import Countdown from 'react-countdown-now';
 import { Container, Draggable } from 'react-smooth-dnd';
 
-
 import MissionCountdown from './countdown';
 import actionCreators from '../../modules/mission/actions'
 import './index.css'
 import ChallengeCard from './challengeCard'
 const exampleChallengeCardData =require('../../assets/exampleChallengeCardData.json');
 import resourceCardDefs from '../../assets/resourceCardDefs.json'
-import SimpleSortableList from './SimpleSortableList';
 import './card.css'
 
 function getRandomIntInclusive(min, max) {
@@ -230,22 +228,18 @@ class Mission extends Component {
                             {_.map(currentChallenge, challenge => {
                                 const challengeRequirements = this.getRemainingRequirements(challenge.requirements, resourcesPile);
                                 return (
-                                        <Container
-                                        key={challenge.id}
-                                            orientation="horizontal"
-                                            animationDuration={0}
-                                            shouldAcceptDrop={(incoming, payload) => this.shouldAcceptDrop(incoming, payload, challengeRequirements)}
-                                        >
-                                            {/* { _.map(resourcesPile, (requirement, index) => {
-                                                if (_.contains(challengeRequirements, resourcesPile[index])) {
-                                                    return <div className="resourceCard paid" key={index}> {requirement} </div>
-                                                }
-                                            })}  */}
-                                            
-                                            {_.map(challengeRequirements, (requirement, index) => {
-                                                return <div className="resourceCard card" key={index}> {requirement} </div>
-                                            })}
-                                        </Container>
+                                    <Container
+                                        key={challengeRequirements}
+                                        orientation="horizontal"
+                                        shouldAcceptDrop={(incoming, payload) => this.shouldAcceptDrop(incoming, payload, challengeRequirements)}
+                                    >
+                                        {_.map(resourcesPile, (requirement, index) => {
+                                                return <div className="card paid" key={index}> {requirement} </div>
+                                        })}  
+                                        {_.map(challengeRequirements, (requirement, index) => {
+                                            return <div className="resourceCard card" key={index}> {requirement} </div>
+                                        })}
+                                    </Container>
 
                                 )
                             })}
