@@ -19,3 +19,10 @@
     height: 225px;
     border: black 1px solid
 }
+
+.smooth-dnd-container.horizontal {
+    height: 200px;
+    display: inline-block;
+    vertical-align: top;
+    white-space: normal;
+}

@@ -11,7 +11,7 @@ import MissionCountdown from './countdown';
 import actionCreators from '../../modules/mission/actions'
 import './index.css'
 import ChallengeCard from './challengeCard'
-const exampleChallengeCardData = require('../../assets/exampleChallengeCardData.json')
+const exampleChallengeCardData =require('../../assets/exampleChallengeCardData.json');
 import resourceCardDefs from '../../assets/resourceCardDefs.json'
 import SimpleSortableList from './SimpleSortableList';
 import './card.css'
@@ -40,8 +40,12 @@ class Mission extends Component {
         }
 
         this.state.drawDeck = this.initialDeck(50);
-        this.drawCards(5, this.state.drawDeck, this.state.hand);
-        this.drawCards(1, this.state.challengeDeck, this.state.currentChallenge); //normally should be 1
+        
+    }
+
+    componentDidMount () {
+        this.drawCards(5,'drawDeck', 'hand');
+        this.drawCards(1, 'challengeDeck', 'currentChallenge'); //normally should be 1
     }
 
     initialDeck = (size) => {
@@ -79,16 +83,22 @@ class Mission extends Component {
         let newHand = this.state.hand;
         newHand.splice(handIndex, 1)
 
-        this.drawCards(1, this.state.drawDeck, this.state.hand);
+        this.drawCards(1, 'drawDeck', 'hand');
 
         this.setState({ resourcesPile: resourceArray, hand: newHand })
+
+        this.checkChallengeComplete();
     }
 
     //side FX
     drawCards = (amount, source, destination) => {
+        let src = this.state[source];
+        let dest = this.state[destination];
         for (let i = 0; i < amount; i++) {
-            destination.push(source.pop());
+            dest.push(src.pop());
         }
+ 
+        this.setState({[source] : src, [destination] : dest})
     }
 
     getRemainingRequirements = (requirements, current) => {
@@ -96,7 +106,6 @@ class Mission extends Component {
         const counts2 = _.countBy(current);
 
         const result = _.map(Object.keys(counts), cat => {
-            if (counts2[cat] === undefined) return requirements
             const remainingAmount = counts[cat] - (counts2[cat] || 0);
             let reconstructed = []
             for (let i = 0; i < remainingAmount; i++) {
@@ -104,16 +113,45 @@ class Mission extends Component {
             }
             return reconstructed
         })
+
         return _.flatten(result);
     }
 
     discardThenDraw = () => {
-        this.drawCards(3, this.state.hand, this.state.discardPile)
-        this.drawCards(3, this.state.drawDeck, this.state.hand)
+        this.drawCards(3, 'hand', 'discardPile')
+        this.drawCards(3, 'drawDeck', 'hand')
     }
 
     selectedCard = (group, card, index) => {
 
+    }
+
+    onChallengeComplete = (challenge) => {
+        const {challengeDeck} = this.state;
+
+        let result = _.filter(this.state.currentChallenge, curr => curr.id!==challenge.id);
+
+        this.setState({currentChallenge : result, resourcesPile: []});
+
+        if(result.length === 0) {
+            //try to draw a card from the challenge deck
+            if(challengeDeck.length > 0){
+                this.drawCards(1,'challengeDeck','currentChallenge');
+            } else {
+                console.log('you win!')
+            }
+        } else {
+        }
+    }
+
+    checkChallengeComplete = () => {
+          //TODO: show cool animation?
+          const {currentChallenge, resourcesPile} = this.state;
+          currentChallenge.forEach((challenge)=> {
+            if(this.getRemainingRequirements(challenge.requirements,resourcesPile).length === 0) {
+                this.onChallengeComplete(challenge);
+            }
+        })
     }
 
     render() {
@@ -129,6 +167,12 @@ class Mission extends Component {
             discardPile,
             challengeDeck,
         } = this.state;
+
+        if(currentChallenge.length > 0 && currentChallenge[0] === undefined) {
+            return <div>Loading...</div>
+        }
+
+        const sortedHand = _.sortBy(hand);
 
         return (
             <div className="container">
@@ -148,19 +192,12 @@ class Mission extends Component {
                     </div>
                     <div className="playArea">
                         <div className="currentChallenge row">
-                            {currentChallenge && _.map(currentChallenge, challenge => <ChallengeCard key={challenge.id} {...challenge} />)}
+                            {_.map(currentChallenge, challenge => <ChallengeCard key={challenge.id} {...challenge} />)}
                         </div>
                         <div className="row requirements">
-                            {currentChallenge && _.map(currentChallenge, challenge => {
+                            {_.map(currentChallenge, challenge => {
 
                                 const challengeRequirements = this.getRemainingRequirements(challenge.requirements, resourcesPile);
-                                
-                                //TODO: show cool animation?
-                                if(challengeRequirements.length === 0) {
-                                    console.log("defeated",challenge.title)
-                                    this.drawCards(1,challengeDeck,currentChallenge);
-                                    return null
-                                }
 
                                 return (
                                     <div key={challenge.id}>
@@ -169,11 +206,11 @@ class Mission extends Component {
                                             orientation="horizontal"
                                             shouldAcceptDrop={(incoming, payload) => incoming.groupName === "hand" && _.contains(challengeRequirements, payload.resource)}
                                         >
-                                            {_.map(resourcesPile, (requirement, index) => {
+                                            {/* {_.map(resourcesPile, (requirement, index) => {
                                                 if (_.contains(challengeRequirements, resourcesPile[index])) {
                                                     return <Draggable className="resourceCard paid" key={index}> {requirement} </Draggable>
                                                 }
-                                            })}
+                                            })} */}
                                             {_.map(challengeRequirements, (requirement, index) => {
                                                 return <Draggable className="resourceCard" key={index}> {requirement} </Draggable>
                                             })}
@@ -189,10 +226,10 @@ class Mission extends Component {
                                 className="col-12"
                                 orientation="horizontal"
                                 groupName="hand"
-                                getChildPayload={foo => hand[foo]}
+                                getChildPayload={foo => sortedHand[foo]}
                                 onDrop={({ payload, removedIndex }) => this.playResource(payload, removedIndex)}
                             >
-                                {_.map(hand, (card, index) => {
+                                {_.map(sortedHand, (card, index) => {
                                     return (
                                         <Draggable 
                                             className="card" 

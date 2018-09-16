@@ -13,5 +13,10 @@
         "id": 2, 
         "title": "UXExample",
         "requirements": ["UX", "UX","UX"]
+    },
+    {
+        "id": 3, 
+        "title": "AllExample",
+        "requirements": ["UX", "dev","ops"]
     }
 ]
