@@ -208,7 +208,7 @@ class Mission extends Component {
                             </div>} */}
                     </div>
                     <div className="playArea">
-                        <div className="deckRow">
+                        <div className="row">
                             <div 
                                 className="challengeDeck card"
                                 onClick={()=>{this.drawChallengeCard()}}
@@ -231,8 +231,8 @@ class Mission extends Component {
                                 const challengeRequirements = this.getRemainingRequirements(challenge.requirements, resourcesPile);
 
                                 return (
+                                    <div className="row" key={challenge.id}>
                                         <Container
-                                            key={challenge.id}
                                             orientation="horizontal"
                                             animationDuration={0}
                                             shouldAcceptDrop={(incoming, payload) => this.shouldAcceptDrop(incoming, payload, challengeRequirements)}
@@ -243,17 +243,17 @@ class Mission extends Component {
                                                 }
                                             })}  */}
                                             
-                                            <div className="reqRow">{_.map(challengeRequirements, (requirement, index) => {
+                                            {_.map(challengeRequirements, (requirement, index) => {
                                                 return <div className="resourceCard card" key={index}> {requirement} </div>
-                                            })}</div>
+                                            })}
                                         </Container>
+                                        </div>
 
                                 )
                             }
                             )}
                         
-                        <div className="handRow">
-                            <div>Hand</div>
+                        <div className="row">
                             <Container
                                 className="hand"
                                 orientation="horizontal"
@@ -272,9 +272,6 @@ class Mission extends Component {
                                     )
                                 })}
                             </Container>
-                            
-                        </div>
-                        <div>
                             <button 
                                 className="btn"
                                 disabled={drawDeck.length === 0}

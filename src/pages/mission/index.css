@@ -1,5 +1,6 @@
 .resourceCard {
     background: darkgray;
+    justify-items: center;
 }
 
 .paid {
@@ -7,29 +8,9 @@
 }
 
 .playArea {
-    display: grid;
-    grid-template-rows: auto;
+    
     background-color: #444;
 }
-
-.deckRow {
-    background: red;
-    display: grid;
-    grid-template-columns: 25% 50% 25%
-}
-
-.reqRow {
-    background: green;
-    display: grid;
-    grid-template-columns: repeat(6, auto);
-    grid-template-rows: repeat(2,  auto);
-    align-items: start;
-}
-
-.handRow {
-    background: navy;
-}
-
 
 .challengeDeck {
   
@@ -44,6 +25,6 @@
 }
 
 .smooth-dnd-container.horizontal {
-    /* display: flex;
-    flex-flow: row wrap; */
+     display: flex;
+    flex-flow: row wrap; 
 }
