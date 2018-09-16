@@ -28,15 +28,20 @@ class Mission extends Component {
     constructor(props) {
         super(props);
         this.state = {
+
             hasStarted: false,
             isPaused: true,
             endTime: moment().add('1', 'm'),//endTime: moment(0,'ms')
+
             hand: [], //array of resource and event cards
             drawDeck: [], //stack of cards
             resourcesPile: [], //arr of strings
             discardPile: [], //stack of cards
             challengeDeck: exampleChallengeCardData,
             currentChallenge: [],
+
+            bonusChallenge: null,
+            bonusResourcePile: [],
         }
         this.state.drawDeck = this.initialDeck(50);
     }
@@ -120,6 +125,7 @@ class Mission extends Component {
         return _.flatten(result);
     }
 
+    //side FX
     discardThenDraw = () => {
         this.drawCards(3, 'hand', 'discardPile')
         this.drawCards(3, 'drawDeck', 'hand')
@@ -129,20 +135,7 @@ class Mission extends Component {
         
     }
 
-    onChallengeComplete = (challenge) => {
-        const {challengeDeck} = this.state;
-
-        let result = _.filter(this.state.currentChallenge, curr => curr.id!==challenge.id);
-        this.setState({currentChallenge : result, resourcesPile: []});
-
-        if(result.length === 0) {
-            //try to draw a card from the challenge deck
-            if(challengeDeck.length === 0){
-                console.log('you win!')
-            }
-        }
-    }
-
+    //side FX
     drawChallengeCard = () => {
         if(this.state.currentChallenge.length===0){
             this.drawCards(1,'challengeDeck','currentChallenge');
@@ -157,6 +150,21 @@ class Mission extends Component {
                 this.onChallengeComplete(challenge);
             }
         })
+    }
+
+    //side FX
+    onChallengeComplete = (challenge) => {
+        const {challengeDeck} = this.state;
+
+        let result = _.filter(this.state.currentChallenge, curr => curr.id!==challenge.id);
+        this.setState({currentChallenge : result, resourcesPile: []});
+
+        if(result.length === 0) {
+            //try to draw a card from the challenge deck
+            if(challengeDeck.length === 0){
+                console.log('you win!')
+            }
+        }
     }
 
     shouldAcceptDrop = (incoming, payload, challengeRequirements) => {
@@ -200,47 +208,54 @@ class Mission extends Component {
                             </div>} */}
                     </div>
                     <div className="playArea">
-                        <div className="currentChallenge row justify-content-start">
-                            <div className="challengeDeck">
-                                <div 
-                                    className="challengeCard mr-5"
-                                    onClick={()=>{this.drawChallengeCard()}}
-                                >
-                                    Challenge Deck
-                                </div>
-                        </div>
-                                {_.map(currentChallenge, challenge => <ChallengeCard key={challenge.id} {...challenge} />)}
+                        <div className="deckRow">
+                            <div 
+                                className="challengeDeck card"
+                                onClick={()=>{this.drawChallengeCard()}}
+                            >
+                                Challenge Deck
                             </div>
-                        <div className="row requirements justify-content-start">
+                                {_.map(currentChallenge, challenge => <ChallengeCard key={challenge.id} {...challenge} />)}
+                            <Container
+                                className="discardPile"
+                                orientation="horizontal"
+                                groupName="hand"
+                            >
+                                <div className="card"> 
+                                    Discard Pile
+                                </div>
+                            </Container>
+                        </div>
                             {_.map(currentChallenge, challenge => {
 
                                 const challengeRequirements = this.getRemainingRequirements(challenge.requirements, resourcesPile);
 
                                 return (
-                                    <div key={challenge.id}>
-                                        <div className="col-12">{challenge.title} requirements</div>
                                         <Container
+                                            key={challenge.id}
                                             orientation="horizontal"
+                                            animationDuration={0}
                                             shouldAcceptDrop={(incoming, payload) => this.shouldAcceptDrop(incoming, payload, challengeRequirements)}
                                         >
-                                            { _.map(resourcesPile, (requirement, index) => {
+                                            {/* { _.map(resourcesPile, (requirement, index) => {
                                                 if (_.contains(challengeRequirements, resourcesPile[index])) {
-                                                    return <Draggable className="resourceCard paid" key={index}> {requirement} </Draggable>
+                                                    return <div className="resourceCard paid" key={index}> {requirement} </div>
                                                 }
-                                            })} 
-                                            {_.map(challengeRequirements, (requirement, index) => {
-                                                return <div className="resourceCard" key={index}> {requirement} </div>
-                                            })}
+                                            })}  */}
+                                            
+                                            <div className="reqRow">{_.map(challengeRequirements, (requirement, index) => {
+                                                return <div className="resourceCard card" key={index}> {requirement} </div>
+                                            })}</div>
                                         </Container>
-                                    </div>
 
                                 )
                             }
-                            )}</div>
-                        <div className="row hand justify-content-around">
-                            <div className="col-12">Hand</div>
+                            )}
+                        
+                        <div className="handRow">
+                            <div>Hand</div>
                             <Container
-                                className="col-3 col-sm-offset-3"
+                                className="hand"
                                 orientation="horizontal"
                                 groupName="hand"
                                 getChildPayload={foo => sortedHand[foo]}
@@ -249,26 +264,17 @@ class Mission extends Component {
                                 {_.map(sortedHand, (card, index) => {
                                     return (
                                         <Draggable 
-                                            className="card" 
                                             key={index}
                                             onClick={()=>{this.selectedCard("hand", card, index)}}
                                         > 
-                                        {card.title} 
+                                        <div className="card">{card.title} </div>
                                         </Draggable>
                                     )
                                 })}
                             </Container>
-                            <Container
-                                className="col-3 "
-                                orientation="horizontal"
-                                groupName="hand"
-                            >
-                                <div className="card"> 
-                                    Discard
-                                </div>
-                            </Container>
+                            
                         </div>
-                        <div className="row player-controls">
+                        <div>
                             <button 
                                 className="btn"
                                 disabled={drawDeck.length === 0}

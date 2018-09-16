@@ -1,35 +1,49 @@
-.homeContainer {
-    margin-left: 48px;
-    background: green;
-}
-
 .resourceCard {
-    width: 150px;
-    height: 200px;
-    border: solid darkgray 1px;
     background: darkgray;
-    border-radius: 25px;
 }
 
 .paid {
     background: gold;
 }
 
-.requirements {
-    height: 225px;
-    border: black 1px solid
+.playArea {
+    display: grid;
+    grid-template-rows: auto;
+    background-color: #444;
+}
+
+.deckRow {
+    background: red;
+    display: grid;
+    grid-template-columns: 25% 50% 25%
+}
+
+.reqRow {
+    background: green;
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    grid-template-rows: repeat(2,  auto);
+    align-items: start;
+}
+
+.handRow {
+    background: navy;
+}
+
+
+.challengeDeck {
+  
+}
+
+.challengeCard {
+ 
+}
+
+.discardPile {
+  
 }
 
 .smooth-dnd-container.horizontal {
-    height: 200px;
-    display: inline-block;
-    vertical-align: top;
-    white-space: normal;
-}
-
-
-.smooth-dnd-container.horizontal {
-    white-space: nowrap;
-    display: flex;
-    flex-wrap: wrap
+    /* display: flex;
+    flex-flow: row wrap; */
 }

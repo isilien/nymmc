@@ -25,7 +25,7 @@ class ChallengeCard extends Component {
         //TODO: use ID to get img?
         const {id, title, requirements} = this.props;
         return (
-            <div className="challengeCard" key={id}>
+            <div className="challengeCard card" key={id}>
                 <div className="cardTitle">{title}</div>
                 <div className="cardSymbols">{this.getSymbolsForRequirements(requirements)}</div>
             </div>

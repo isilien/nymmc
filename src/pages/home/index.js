@@ -22,5 +22,3 @@ class Home extends Component {
     }
 }
 export default Home;
-
-<Link to=""></Link>
