@@ -1,10 +1,16 @@
 .card {
-    width: 150px;
-    height: 200px;
+    width: 96px;
+    height: 128px;
     border: solid black 1px;
-    border-radius: 20px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 5px;
     font-size: 12px;
+}
+
+.tint {
+    background: red;
+    width: 72px;
+    height: 96px;
 }

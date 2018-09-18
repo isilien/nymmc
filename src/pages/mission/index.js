@@ -14,6 +14,21 @@ const exampleChallengeCardData =require('../../assets/exampleChallengeCardData.j
 import resourceCardDefs from '../../assets/resourceCardDefs.json'
 import './card.css'
 
+import devImgSrc from '../../assets/images/api.png'
+import UXImgSrc from '../../assets/images/ux.png'
+import opsImgSrc from '../../assets/images/ops.png'
+
+function getResourceImg (resource) {
+    switch(resource) {
+        case 'UX':
+            return UXImgSrc;
+        case 'ops':
+            return opsImgSrc;
+        case 'dev':
+            return devImgSrc;
+    }
+}
+
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -38,14 +53,18 @@ class Mission extends Component {
             challengeDeck: exampleChallengeCardData,
             currentChallenge: [],
 
+            selectedCards: [], //indexes of cards in hand
+
             bonusChallenge: null,
             bonusResourcePile: [],
         }
+        this.discardThenDraw = this.discardThenDraw.bind(this)
+
         this.state.drawDeck = this.initialDeck(50);
     }
 
     componentDidMount () {
-        this.drawCards(5,'drawDeck', 'hand');
+        this.moveCards(5,'drawDeck', 'hand');
         this.drawNewChallenge();
     }
 
@@ -92,7 +111,7 @@ class Mission extends Component {
         let newHand = hand;
         newHand.splice(handIndex, 1)
 
-        this.drawCards(1, 'drawDeck', 'hand');
+        this.moveCards(1, 'drawDeck', 'hand');
 
         this.setState({ resourcesPile: resourceArray, hand: newHand })
 
@@ -100,7 +119,7 @@ class Mission extends Component {
     }
 
     //side FX
-    drawCards = (amount, source, destination) => {
+    moveCards = (amount, source, destination) => {
         let src = this.state[source];
         let dest = this.state[destination];
 
@@ -137,25 +156,45 @@ class Mission extends Component {
     }
 
     //side FX
-    discardThenDraw = () => {
-        this.drawCards(3, 'hand', 'discardPile')
-        this.drawCards(3, 'drawDeck', 'hand')
+    discardThenDraw (e, amount = 3) {
+        this.moveCards(amount, 'hand', 'discardPile')
+        this.moveCards(amount, 'drawDeck', 'hand')
     }
 
     selectedCard = (group, card, index) => {
-        
+        let {selectedCards} = this.state;
+        if(_.contains(selectedCards, index)){
+            selectedCards = _.without(selectedCards, index)
+        } else {
+            selectedCards.push(index)
+        }
+        this.setState({selectedCards: selectedCards})
+    }
+
+    discardSelected = () => {
+
     }
 
     checkChallengeComplete = () => {
         //TODO: show cool animation?
-        const {currentChallenge, resourcesPile} = this.state;
-        if(this.getRemainingRequirements(currentChallenge.requirements, resourcesPile).length === 0) {
-            this.onChallengeComplete(currentChallenge);
+        const {currentChallenge, bonusChallenge, bonusResourcePile, resourcesPile} = this.state;
+
+        if(currentChallenge.type==="challenge"){
+            if(this.getRemainingRequirements(currentChallenge.requirements, resourcesPile).length === 0) {
+                this.onChallengeComplete();
+            }
+        } else if(currentChallenge.type==="discard"){
+            //once user has selected N cards to discard
+        } else if(currentChallenge.type==="double"){
+            if (this.getRemainingRequirements(currentChallenge.requirements, resourcesPile).length === 0 && 
+                this.getRemainingRequirements(bonusChallenge, bonusResourcePile).length === 0) {
+                this.onChallengeComplete();
+            }
         }
     }
 
     //side FX
-    onChallengeComplete = (challenge) => {
+    onChallengeComplete = () => {
         const {challengeDeck} = this.state;
 
         //try to draw a card from the challenge deck
@@ -186,6 +225,7 @@ class Mission extends Component {
             resourcesPile,
             discardPile,
             challengeDeck,
+            selectedCards,
         } = this.state;
 
         if(!exampleChallengeCardData) {
@@ -230,7 +270,7 @@ class Mission extends Component {
                                 </Container>
                             </div> */}
                         </div>
-                        <div className="row requirementsArea  d-flex justify-content-center">
+                        <div className="row requirementsArea d-flex justify-content-center" key={challengeRequirements}>
                             <Container
                                 orientation="horizontal"
                                 shouldAcceptDrop={(incoming, payload) => this.shouldAcceptDrop(incoming, payload, challengeRequirements)}
@@ -238,9 +278,9 @@ class Mission extends Component {
                                 {_.map(resourcesPile, (requirement, index) => {
                                         return <div className="card paid" key={index}> {requirement} </div>
                                 })}  
-                                {_.map(challengeRequirements, (requirement, index) => {
-                                    return <div className="resourceCard card" key={index}> {requirement} </div>
-                                })}
+                                {/* {_.map(challengeRequirements, (requirement, index) => {
+                                    return <img className="resourceCard card" key={index} src={getResourceImg(requirement)}/>
+                                })} */}
                             </Container>
                         </div>
                         <div className="row">
@@ -266,8 +306,8 @@ class Mission extends Component {
                                         <Draggable 
                                             key={index}
                                             onClick={()=>{this.selectedCard("hand", card, index)}}
-                                        > 
-                                        <div className="card">{card.title} </div>
+                                        >
+                                        <img className={`card ${_.contains(selectedCards, index) ? 'tint' : null}`} src={getResourceImg(card.resource)}/>
                                         </Draggable>
                                     )
                                 })}
