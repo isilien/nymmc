@@ -28,5 +28,22 @@
         "type": "challenge",
         "title": "Everything Example",
         "requirements": ["UX", "dev","ops"]
+    },
+    {
+        "id": 5,
+        "type": "discard",
+        "title": "Solar Storm",
+        "amount": "all"
+    },
+    {
+        "id": 6,
+        "type": "discard",
+        "title": "Tumbling Satellite",
+        "amount": 3
+    },
+    {
+        "id": 7,
+        "type": "double",
+        "title": "Acquire Another Company"
     }
 ]

@@ -3,18 +3,21 @@
         "title": "ops",
         "type": "resource",
         "resource": "ops",
-        "amount": 1
+        "amount": 1,
+        "img":"ops"
     },
     {
         "title": "dev",
         "type": "resource",
         "resource": "dev",
-        "amount": 1
+        "amount": 1,
+        "img":"api"
     },
     {
         "title": "UX",
         "type": "resource",
         "resource": "UX",
-        "amount": 1
+        "amount": 1,
+        "img":"ux"
     }
 ]
