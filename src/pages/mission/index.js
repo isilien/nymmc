@@ -190,7 +190,6 @@ class Mission extends Component {
                 this.onChallengeComplete();
             }
         } else if(currentChallenge.type==="discard"){
-            console.log('checking', selectedCards, currentChallenge.type);
             //once user has selected N cards to discard
             let amountToDiscard;
 
@@ -204,10 +203,12 @@ class Mission extends Component {
                 this.onChallengeComplete();
 
                 this.setState({
-                    hand: _.filter(hand, (card, index) =>{
+                    hand: _.reject(hand, (card, index) =>{
                         return _.contains(this.selectedCard, index)
                     })
                 })
+                this.moveCards(amountToDiscard,'drawDeck','hand');
+                console.log(hand)
             }
             
         } else if(currentChallenge.type==="double"){
