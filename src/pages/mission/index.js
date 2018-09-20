@@ -53,6 +53,7 @@ class Mission extends Component {
             challengeDeck: exampleChallengeCardData,
             currentChallenge: [],
             showVictory: false,
+            showDefeat: false,
             selectedCards: [], //indexes of cards in hand
 
             bonusChallenge: null,
@@ -232,6 +233,7 @@ class Mission extends Component {
             challengeDeck,
             selectedCards,
             showVictory,
+            showDefeat,
         } = this.state;
 
         if(!exampleChallengeCardData) {
@@ -306,12 +308,12 @@ class Mission extends Component {
                         </div>
                     </div>
                 </div>
-                {!showVictory ? 
+                {showVictory || showDefeat ? 
                     <div className="modal" tabIndex="-1" role="dialog">
                         <div className="modal-dialog" role="document">
                             <div className="modal-content">
                                 <div className="modal-body">
-                                    <p>Congrats! You did it!</p>
+                                    <p>{showVictory ? "Congrats! You did it!" : "Sorry, better luck next time!"}</p>
                                 </div>
                                 <div className="modal-footer">
                                     <button onClick={console.log("redirect back to home")} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
