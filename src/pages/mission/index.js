@@ -162,7 +162,7 @@ class Mission extends Component {
 
     selectedCard = (group, card, index) => {
 
-        if (this.state.isPaused) return;
+        if (this.state.isPaused || this.state.currentChallenge === null) return;
         if (this.state.currentChallenge.type === 'discard'){
             let {selectedCards} = this.state;
             if(_.contains(selectedCards, index)){
@@ -203,12 +203,11 @@ class Mission extends Component {
                 this.onChallengeComplete();
 
                 this.setState({
-                    hand: _.reject(hand, (card, index) =>{
-                        return _.contains(this.selectedCard, index)
+                    selectedCards: [], 
+                    hand: hand.filter((card, index)=>{
+                        return !_.contains(selectedCards,index)
                     })
                 })
-                this.moveCards(amountToDiscard,'drawDeck','hand');
-                console.log(hand)
             }
             
         } else if(currentChallenge.type==="double"){
@@ -221,8 +220,7 @@ class Mission extends Component {
 
     //side FX
     onChallengeComplete = () => {
-        const {challengeDeck} = this.state;
-        console.log('done')
+        const {challengeDeck, hand} = this.state;
         //try to draw a card from the challenge deck
         if(challengeDeck.length === 0){
             console.log('you win!')
@@ -230,6 +228,13 @@ class Mission extends Component {
 
         } else {
             this.setState({currentChallenge: null, resourcesPile: []})
+        }
+    }
+
+    drawUpTo5 = () => {
+        const {hand} = this.state;
+        if(hand.length < 5) {
+            this.moveCards(5-hand.length, 'drawDeck','hand')
         }
     }
 
@@ -306,9 +311,12 @@ class Mission extends Component {
                                 </div>
                             </div>
                             <div className="row handArea">
-                                <div className="drawDeck card">
+                                <div 
+                                    className="drawDeck card"
+                                    onClick={ () => { if(hand.length <5) this.drawUpTo5(); }}
+                                >
                                     Draw Deck: {drawDeck.length}
-                                    
+                                    {hand.length < 5 ? 'Click to draw' : null}
                                 </div>
                                 <div className="hand">
                                     {_.map(hand, (card, index) => {
