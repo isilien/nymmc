@@ -24,10 +24,10 @@ class MissionCountdown extends Component {
   render() {
       const text = this.state.index < 4 ? 4 - this.state.index : "Go!";
         return (
-            <div>
+            <div className="timer">
                 {this.state.index === 0 ?  
-                        <button className="btn btn-primary" onClick={this.beginCountdown} >
-                        Start
+                    <button className="btn btn-success" onClick={this.beginCountdown} >
+                        Start Mission
                     </button>
                     : <div className="modal" tabIndex="-1" role="dialog">
                     <div className="modal-dialog" role="document">

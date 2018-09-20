@@ -44,8 +44,7 @@ class Mission extends Component {
         this.state = {
 
             hasStarted: false,
-            isPaused: true,
-            endTime: moment().add('1', 'm'),//endTime: moment(0,'ms')
+            isPaused: false,
 
             hand: [], //array of resource and event cards
             drawDeck: [], //stack of cards
@@ -79,21 +78,15 @@ class Mission extends Component {
     }
 
     startCountdown = () => {
-        this.setState({ hasStarted: true, isPaused: false, endTime: moment().add('1', 'm') })
+        this.setState({ hasStarted: true, isPaused: false })
     }
 
     startMission = () => {
 
     }
 
-    onMissionPause = () => {
-        this.setState({ isPaused: !this.state.isPaused })
-    }
-
     onTimerEnd = () => {
-        //you lose!
-        //TODO: show game over modal
-        console.log("You lose");
+        this.setState({showDefeat: true})
     }
 
     //from hand
@@ -247,19 +240,14 @@ class Mission extends Component {
             <div className="container">
                 <div className="missionContent">
                     <div className="missionTimer">
-                         {/* {!hasStarted ? <MissionCountdown startCountdown={this.startCountdown}/> :
-                            <div>
-                                <button className="btn btn-secondary" data-toggle="button" onClick={this.onMissionPause}>
-                                    <i className={`fas fa-${isPaused ? 'play' : 'pause'}`}/> 
-                                </button>
-                                <Countdown date={endTime.valueOf()} onComplete={this.onTimerEnd} />
-                            </div>} */}
-                            <Timer 
-                                onPause={()=>{console.log('paused')}}
-                                onPlay={()=>{console.log('play')}}
-                                updateRemainingTime={(time)=>{console.log(time, 'seconds left')}}
-                                timeEnded={()=>{console.log("time is up")}}
-                            />
+                          {!hasStarted ? <MissionCountdown startCountdown={this.startCountdown}/> :
+                                <Timer 
+                                    onPause={()=>{this.setState({isPaused: true})}}
+                                    onPlay={()=>{this.setState({isPaused: false})}}
+                                    updateRemainingTime={(time)=>{this.setState({timeRemaining: time})}}
+                                    timeEnded={this.onTimerEnd}
+                                />
+                           } 
                     </div>
                     <div className="playArea">
                         <div className="row challengeDeckArea">

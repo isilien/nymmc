@@ -7,9 +7,13 @@ class Timer extends Component {
 
         this.state = {
             isPaused: false,
-            seconds: 300,
+            seconds: 10,
             started: false
         }
+    }
+
+    componentDidMount () {
+        this.startTimer();
     }
 
     countTime = () => {
@@ -21,7 +25,6 @@ class Timer extends Component {
         this.props.updateRemainingTime(newTime);
 
         if(this.state.seconds <1 ) {
-            console.log("time is up")
             this.props.timeEnded();
             return;
         } else {
@@ -60,10 +63,15 @@ class Timer extends Component {
           started
         } = this.state;
         return (
-            <div>
-                {isPaused || !started ? <button onClick={this.startTimer}>Start</button> : 
-                <button onClick={this.pauseTimer}>Pause</button>}
-                {Math.floor(seconds/60)}:{seconds%60 < 10 ? `0${seconds%60}`: seconds%60}
+            <div className="timer">
+                {
+                isPaused || !started ? 
+                    <button className="btn btn-secondary" onClick={this.startTimer}><i className="fas fa-play"/></button> : 
+                    <button className="btn btn-secondary" onClick={this.pauseTimer}><i className="fas fa-pause"/></button>
+                }
+                <div className="clock">{ 
+                    Math.floor(seconds/60)}:{seconds%60 < 10 ? `0${seconds%60}` : seconds%60 
+                }</div>
             </div>
         )
   }
