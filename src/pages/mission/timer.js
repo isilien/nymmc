@@ -7,7 +7,7 @@ class Timer extends Component {
 
         this.state = {
             isPaused: false,
-            seconds: 10,
+            seconds: 300,
             started: false
         }
     }

@@ -27,11 +27,15 @@ class ChallengeCard extends Component {
 
     render() {
         //TODO: use ID to get img?
-        const {id, title, requirements} = this.props;
+        const {id, title, type, amount, requirements} = this.props;
         return (
             <div className="challengeCard card">
                 <div className="cardTitle">{title}</div>
-                <div className="cardSymbols">{this.getSymbolsForRequirements(requirements)}</div>
+                {
+                    type === 'challenge' ? 
+                    <div className="cardSymbols">{this.getSymbolsForRequirements(requirements)}</div>
+                    : <div>Discard {amount}</div>
+                }
             </div>
         )
     }

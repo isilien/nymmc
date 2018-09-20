@@ -1,5 +1,10 @@
 [
     {
+        "id": 7,
+        "type": "double",
+        "title": "Acquire Another Company"
+    },
+    {
         "id": 0,
         "type": "challenge",
         "title": "Ops Example",
@@ -40,10 +45,5 @@
         "type": "discard",
         "title": "Tumbling Satellite",
         "amount": 3
-    },
-    {
-        "id": 7,
-        "type": "double",
-        "title": "Acquire Another Company"
     }
 ]

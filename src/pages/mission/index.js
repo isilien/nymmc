@@ -51,7 +51,7 @@ class Mission extends Component {
             resourcesPile: [], //arr of strings
             discardPile: [], //stack of cards
             challengeDeck: exampleChallengeCardData,
-            currentChallenge: [],
+            currentChallenge: null,
             showVictory: false,
             showDefeat: false,
             selectedCards: [], //indexes of cards in hand
@@ -132,7 +132,10 @@ class Mission extends Component {
     //side FX
     drawNewChallenge = () => {
         if(this.state.isPaused) return;
-        this.setState({currentChallenge: this.state.challengeDeck.pop(), resourcesPile: []})
+
+        const newChallenge = this.state.challengeDeck.pop();
+        const newState = {currentChallenge: newChallenge, resourcesPile: []};
+        this.setState(newState);
     }
 
     getRemainingRequirements = (requirements, current) => {
@@ -147,12 +150,11 @@ class Mission extends Component {
             }
             return reconstructed
         })
-
         return _.flatten(result);
     }
 
     //side FX
-    discardThenDraw (e, amount = 3) {
+    discardThenDraw = (e, amount = 3) => {
         if(this.state.isPaused) return;
         this.moveCards(amount, 'hand', 'discardPile')
         this.moveCards(amount, 'drawDeck', 'hand')
@@ -160,9 +162,8 @@ class Mission extends Component {
 
     selectedCard = (group, card, index) => {
 
-        if(this.state.isPaused) return;
-
-        if (this.state.isDiscarding){
+        if (this.state.isPaused) return;
+        if (this.state.currentChallenge.type === 'discard'){
             let {selectedCards} = this.state;
             if(_.contains(selectedCards, index)){
                 selectedCards = _.without(selectedCards, index)
@@ -170,25 +171,45 @@ class Mission extends Component {
                 selectedCards.push(index)
             }
             this.setState({selectedCards: selectedCards})
+
+           setTimeout(this.checkChallengeComplete(), 100);
+
         } else {
             this.playResource(card, index);
         }
     }
 
-    discardSelected = () => {
-
-    }
-
     checkChallengeComplete = () => {
         //TODO: show cool animation?
-        const {currentChallenge, bonusChallenge, bonusResourcePile, resourcesPile} = this.state;
+
+        const {currentChallenge, hand, selectedCards, bonusChallenge, bonusResourcePile, resourcesPile} = this.state;
+        if(currentChallenge === null) return;
 
         if(currentChallenge.type==="challenge"){
             if(this.getRemainingRequirements(currentChallenge.requirements, resourcesPile).length === 0) {
                 this.onChallengeComplete();
             }
         } else if(currentChallenge.type==="discard"){
+            console.log('checking', selectedCards, currentChallenge.type);
             //once user has selected N cards to discard
+            let amountToDiscard;
+
+            if(currentChallenge === 'all') {
+                amountToDiscard = hand.length;
+            } else {
+                amountToDiscard = currentChallenge.amount;
+            }
+
+            if(selectedCards.length === amountToDiscard) {
+                this.onChallengeComplete();
+
+                this.setState({
+                    hand: _.filter(hand, (card, index) =>{
+                        return _.contains(this.selectedCard, index)
+                    })
+                })
+            }
+            
         } else if(currentChallenge.type==="double"){
             if (this.getRemainingRequirements(currentChallenge.requirements, resourcesPile).length === 0 && 
                 this.getRemainingRequirements(bonusChallenge, bonusResourcePile).length === 0) {
@@ -200,7 +221,7 @@ class Mission extends Component {
     //side FX
     onChallengeComplete = () => {
         const {challengeDeck} = this.state;
-
+        console.log('done')
         //try to draw a card from the challenge deck
         if(challengeDeck.length === 0){
             console.log('you win!')
@@ -209,7 +230,7 @@ class Mission extends Component {
         } else {
             this.setState({currentChallenge: null, resourcesPile: []})
         }
-}
+    }
 
     shouldAcceptDrop = (incoming, payload, challengeRequirements) => {
        return _.contains(
@@ -243,7 +264,7 @@ class Mission extends Component {
 
         return (
             <div className="container">
-                {!hasStarted ? <MissionCountdown startCountdown={this.startCountdown}/> :
+                {hasStarted ? <MissionCountdown startCountdown={this.startCountdown}/> :
                     <div className="missionContent">
                             <Timer 
                                 onPause={()=>{this.setState({isPaused: true})}}
@@ -260,7 +281,9 @@ class Mission extends Component {
                                 >
                                     Challenge Deck: {challengeDeck.length}
                                 </button>
-                                {challengeRequirements.length > 0 ? <ChallengeCard {...currentChallenge} /> : null}
+                                {
+                                    currentChallenge!==null ? <ChallengeCard {...currentChallenge} /> : null
+                                }
                             </div>
                             <div className="row requirementsArea d-flex justify-content-center">
                                 <div className="requirements">
