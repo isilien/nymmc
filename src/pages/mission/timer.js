@@ -63,7 +63,7 @@ class Timer extends Component {
             <div>
                 {isPaused || !started ? <button onClick={this.startTimer}>Start</button> : 
                 <button onClick={this.pauseTimer}>Pause</button>}
-                {Math.floor(seconds/60)}:{seconds%60}
+                {Math.floor(seconds/60)}:{seconds%60 < 10 ? `0${seconds%60}`: seconds%60}
             </div>
         )
   }
