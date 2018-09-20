@@ -5,6 +5,7 @@ import moment from 'moment'
 import { Link } from 'react-router-dom';
 import Countdown from 'react-countdown-now';
 import { Container, Draggable } from 'react-smooth-dnd';
+import Timer from './timer';
 
 import MissionCountdown from './countdown';
 import actionCreators from '../../modules/mission/actions'
@@ -244,19 +245,21 @@ class Mission extends Component {
 
         return (
             <div className="container">
-                <div className="subheader">
-                    <h2>Mission {id}</h2>
-                </div>
                 <div className="missionContent">
                     <div className="missionTimer">
-                        {/* {<button className="btn btn-secondary" data-toggle="button" onClick={this.onMissionPause}>
-                            <i className={`fas fa-${isPaused ? 'play' : 'pause'}`}/> 
-                        </button>} */}
-                        {/* {!hasStarted ? <MissionCountdown startCountdown={this.startCountdown} /> :
+                         {/* {!hasStarted ? <MissionCountdown startCountdown={this.startCountdown}/> :
                             <div>
+                                <button className="btn btn-secondary" data-toggle="button" onClick={this.onMissionPause}>
+                                    <i className={`fas fa-${isPaused ? 'play' : 'pause'}`}/> 
+                                </button>
                                 <Countdown date={endTime.valueOf()} onComplete={this.onTimerEnd} />
-                                <button className="btn btn-danger" onClick={() => { alert("Are you sure you want to quit?") }}><i className="fas fa-times" /> Quit</button>
                             </div>} */}
+                            <Timer 
+                                onPause={()=>{console.log('paused')}}
+                                onPlay={()=>{console.log('play')}}
+                                updateRemainingTime={(time)=>{console.log(time, 'seconds left')}}
+                                timeEnded={()=>{console.log("time is up")}}
+                            />
                     </div>
                     <div className="playArea">
                         <div className="row challengeDeckArea">
