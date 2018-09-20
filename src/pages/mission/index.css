@@ -14,14 +14,27 @@
     background-color: #444;
 }
 
+.hand {
+    display: flex;
+    flex-flow: row;
+}
+
+.requirements {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+
 .challengeDeck {
     background: brown;
     color: white;
+    margin-right: 20px;
 }
 
 .drawDeck {
     background: cornflowerblue;
     color: white;
+    margin-right: 20px;
 }
 
 .discardPile {
@@ -33,12 +46,22 @@
     align-items: center;
 }
 
-.requirementsArea{
-    min-height: 128px;
+.requirementsArea {
     margin: 20px;
+    min-height: 128px;
     padding: 20px;
     border-radius: 25px;
     border: 1px dashed white;
+}
+
+.handArea {
+    margin: 20px;
+    padding-bottom: 20px;
+}
+
+.challengeDeckArea {
+    padding-top: 20px;
+    margin: 20px
 }
 
 .smooth-dnd-container.horizontal {

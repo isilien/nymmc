@@ -162,13 +162,17 @@ class Mission extends Component {
     }
 
     selectedCard = (group, card, index) => {
-        let {selectedCards} = this.state;
-        if(_.contains(selectedCards, index)){
-            selectedCards = _.without(selectedCards, index)
+        if (this.state.isDiscarding){
+            let {selectedCards} = this.state;
+            if(_.contains(selectedCards, index)){
+                selectedCards = _.without(selectedCards, index)
+            } else {
+                selectedCards.push(index)
+            }
+            this.setState({selectedCards: selectedCards})
         } else {
-            selectedCards.push(index)
+            this.playResource(card, index);
         }
-        this.setState({selectedCards: selectedCards})
     }
 
     discardSelected = () => {
@@ -251,7 +255,7 @@ class Mission extends Component {
                             </div>} */}
                     </div>
                     <div className="playArea">
-                        <div className="row d-flex justify-content-center">
+                        <div className="row challengeDeckArea">
                             <button
                                 className="challengeDeck card"
                                 disabled={!(challengeRequirements.length === 0 && challengeDeck.length > 0)}
@@ -260,59 +264,43 @@ class Mission extends Component {
                                 Challenge Deck: {challengeDeck.length}
                             </button>
                             {challengeRequirements.length > 0 ? <ChallengeCard {...currentChallenge} /> : null}
-                            {/* <div className=" discardPile "> 
-                                <Container
-                                    orientation="horizontal"
-                                    groupName="hand"
-                                    onDrop={(foo,bar,baz)=>{console.log(foo,bar,baz,this)}}
-                                >
-                                        Discard Pile
-                                </Container>
-                            </div> */}
                         </div>
-                        <div className="row requirementsArea d-flex justify-content-center" key={challengeRequirements}>
-                            <Container
-                                orientation="horizontal"
-                                shouldAcceptDrop={(incoming, payload) => this.shouldAcceptDrop(incoming, payload, challengeRequirements)}
-                            >
+                        <div className="row requirementsArea d-flex justify-content-center">
+                            <div className="requirements">
                                 {_.map(resourcesPile, (requirement, index) => {
                                         return <div className="card paid" key={index}> {requirement} </div>
                                 })}  
-                                {/* {_.map(challengeRequirements, (requirement, index) => {
+                                { _.map(challengeRequirements, (requirement, index) => {
                                     return <img className="resourceCard card" key={index} src={getResourceImg(requirement)}/>
-                                })} */}
-                            </Container>
+                                })} 
+                            </div>
                         </div>
-                        <div className="row">
+                        <div className="row  d-flex justify-content-center">
+                            <div 
+                                className="btn btn-warning"
+                                disabled={drawDeck.length === 0}
+                                onClick={this.discardThenDraw}
+                            >
+                                Discard 3, Draw 3 <i className="fas fa-sync-alt"/>
+                            </div>
+                        </div>
+                        <div className="row handArea">
                             <div className="drawDeck card">
                                 Draw Deck: {drawDeck.length}
-                                <div 
-                                    className="btn btn-warning"
-                                    disabled={drawDeck.length === 0}
-                                    onClick={this.discardThenDraw}
-                                >
-                                    Discard 3, Draw 3 <i className="fas fa-sync-alt"/>
-                                </div>
+                                
                             </div>
-                            <Container
-                                className="hand"
-                                orientation="horizontal"
-                                groupName="hand"
-                                getChildPayload={foo => hand[foo]}
-                                onDrop={({ payload, removedIndex}) => this.playResource(payload, removedIndex)}
-                            >
+                            <div className="hand">
                                 {_.map(hand, (card, index) => {
                                     return (
-                                        <Draggable 
+                                        <div 
                                             key={index}
                                             onClick={()=>{this.selectedCard("hand", card, index)}}
                                         >
                                         <img className={`card ${_.contains(selectedCards, index) ? 'tint' : null}`} src={getResourceImg(card.resource)}/>
-                                        </Draggable>
+                                        </div>
                                     )
                                 })}
-                            </Container>
-                            
+                            </div>
                         </div>
                     </div>
                 </div>
