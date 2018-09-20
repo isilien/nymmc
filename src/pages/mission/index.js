@@ -52,7 +52,7 @@ class Mission extends Component {
             discardPile: [], //stack of cards
             challengeDeck: exampleChallengeCardData,
             currentChallenge: [],
-
+            showVictory: false,
             selectedCards: [], //indexes of cards in hand
 
             bonusChallenge: null,
@@ -204,6 +204,7 @@ class Mission extends Component {
         //try to draw a card from the challenge deck
         if(challengeDeck.length === 0){
             console.log('you win!')
+            this.setState({showVictory: true})
 
         } else {
             this.setState({currentChallenge: null, resourcesPile: []})
@@ -230,6 +231,7 @@ class Mission extends Component {
             discardPile,
             challengeDeck,
             selectedCards,
+            showVictory,
         } = this.state;
 
         if(!exampleChallengeCardData) {
@@ -304,6 +306,20 @@ class Mission extends Component {
                         </div>
                     </div>
                 </div>
+                {!showVictory ? 
+                    <div className="modal" tabIndex="-1" role="dialog">
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                                <div className="modal-body">
+                                    <p>Congrats! You did it!</p>
+                                </div>
+                                <div className="modal-footer">
+                                    <button onClick={console.log("redirect back to home")} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                : null}
             </div>
         );
     }
