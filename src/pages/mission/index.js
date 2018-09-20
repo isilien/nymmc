@@ -131,6 +131,7 @@ class Mission extends Component {
 
     //side FX
     drawNewChallenge = () => {
+        if(this.state.isPaused) return;
         this.setState({currentChallenge: this.state.challengeDeck.pop(), resourcesPile: []})
     }
 
@@ -152,11 +153,15 @@ class Mission extends Component {
 
     //side FX
     discardThenDraw (e, amount = 3) {
+        if(this.state.isPaused) return;
         this.moveCards(amount, 'hand', 'discardPile')
         this.moveCards(amount, 'drawDeck', 'hand')
     }
 
     selectedCard = (group, card, index) => {
+
+        if(this.state.isPaused) return;
+
         if (this.state.isDiscarding){
             let {selectedCards} = this.state;
             if(_.contains(selectedCards, index)){
@@ -238,81 +243,79 @@ class Mission extends Component {
 
         return (
             <div className="container">
-                <div className="missionContent">
-                    <div className="missionTimer">
-                          {!hasStarted ? <MissionCountdown startCountdown={this.startCountdown}/> :
-                                <Timer 
-                                    onPause={()=>{this.setState({isPaused: true})}}
-                                    onPlay={()=>{this.setState({isPaused: false})}}
-                                    updateRemainingTime={(time)=>{this.setState({timeRemaining: time})}}
-                                    timeEnded={this.onTimerEnd}
-                                />
-                           } 
-                    </div>
-                    <div className="playArea">
-                        <div className="row challengeDeckArea">
-                            <button
-                                className="challengeDeck card"
-                                disabled={!(challengeRequirements.length === 0 && challengeDeck.length > 0)}
-                                onClick={()=>{this.drawNewChallenge()}}
-                            >
-                                Challenge Deck: {challengeDeck.length}
-                            </button>
-                            {challengeRequirements.length > 0 ? <ChallengeCard {...currentChallenge} /> : null}
-                        </div>
-                        <div className="row requirementsArea d-flex justify-content-center">
-                            <div className="requirements">
-                                {_.map(resourcesPile, (requirement, index) => {
-                                        return <div className="card paid" key={index}> {requirement} </div>
-                                })}  
-                                { _.map(challengeRequirements, (requirement, index) => {
-                                    return <img className="resourceCard card" key={index} src={getResourceImg(requirement)}/>
-                                })} 
+                {!hasStarted ? <MissionCountdown startCountdown={this.startCountdown}/> :
+                    <div className="missionContent">
+                            <Timer 
+                                onPause={()=>{this.setState({isPaused: true})}}
+                                onPlay={()=>{this.setState({isPaused: false})}}
+                                updateRemainingTime={(time)=>{this.setState({timeRemaining: time})}}
+                                timeEnded={this.onTimerEnd}
+                            />
+                        <div className="playArea">
+                            <div className="row challengeDeckArea">
+                                <button
+                                    className="challengeDeck card"
+                                    disabled={!(challengeRequirements.length === 0 && challengeDeck.length > 0)}
+                                    onClick={()=>{this.drawNewChallenge()}}
+                                >
+                                    Challenge Deck: {challengeDeck.length}
+                                </button>
+                                {challengeRequirements.length > 0 ? <ChallengeCard {...currentChallenge} /> : null}
+                            </div>
+                            <div className="row requirementsArea d-flex justify-content-center">
+                                <div className="requirements">
+                                    {_.map(resourcesPile, (requirement, index) => {
+                                            return <div className="card paid" key={index}> {requirement} </div>
+                                    })}  
+                                    { _.map(challengeRequirements, (requirement, index) => {
+                                        return <img className="resourceCard card" key={index} src={getResourceImg(requirement)}/>
+                                    })} 
+                                </div>
+                            </div>
+                            <div className="row  d-flex justify-content-center">
+                                <div 
+                                    className="btn btn-warning"
+                                    disabled={drawDeck.length === 0}
+                                    onClick={this.discardThenDraw}
+                                >
+                                    Discard 3, Draw 3 <i className="fas fa-sync-alt"/>
+                                </div>
+                            </div>
+                            <div className="row handArea">
+                                <div className="drawDeck card">
+                                    Draw Deck: {drawDeck.length}
+                                    
+                                </div>
+                                <div className="hand">
+                                    {_.map(hand, (card, index) => {
+                                        return (
+                                            <div 
+                                                key={index}
+                                                onClick={()=>{this.selectedCard("hand", card, index)}}
+                                            >
+                                            <img className={`card ${_.contains(selectedCards, index) ? 'tint' : null}`} src={getResourceImg(card.resource)}/>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
                             </div>
                         </div>
-                        <div className="row  d-flex justify-content-center">
-                            <div 
-                                className="btn btn-warning"
-                                disabled={drawDeck.length === 0}
-                                onClick={this.discardThenDraw}
-                            >
-                                Discard 3, Draw 3 <i className="fas fa-sync-alt"/>
-                            </div>
-                        </div>
-                        <div className="row handArea">
-                            <div className="drawDeck card">
-                                Draw Deck: {drawDeck.length}
-                                
-                            </div>
-                            <div className="hand">
-                                {_.map(hand, (card, index) => {
-                                    return (
-                                        <div 
-                                            key={index}
-                                            onClick={()=>{this.selectedCard("hand", card, index)}}
-                                        >
-                                        <img className={`card ${_.contains(selectedCards, index) ? 'tint' : null}`} src={getResourceImg(card.resource)}/>
+                        {showVictory || showDefeat ? 
+                            <div className="modal" tabIndex="-1" role="dialog">
+                                <div className="modal-dialog" role="document">
+                                    <div className="modal-content">
+                                        <div className="modal-body">
+                                            <p>{showVictory ? "Congrats! You did it!" : "Sorry, better luck next time!"}</p>
                                         </div>
-                                    )
-                                })}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {showVictory || showDefeat ? 
-                    <div className="modal" tabIndex="-1" role="dialog">
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                                <div className="modal-body">
-                                    <p>{showVictory ? "Congrats! You did it!" : "Sorry, better luck next time!"}</p>
+                                        <div className="modal-footer">
+                                            <button onClick={console.log("redirect back to home")} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="modal-footer">
-                                    <button onClick={console.log("redirect back to home")} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
+                            </div> : null
+                        }
                     </div>
-                : null}
+                }
             </div>
         );
     }
