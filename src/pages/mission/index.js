@@ -11,7 +11,6 @@ import MissionCountdown from './countdown';
 import actionCreators from '../../modules/mission/actions';
 import './index.css';
 import ChallengeCard from './challengeCard';
-const exampleChallengeCardData =require('../../assets/exampleChallengeCardData.json');
 import resourceCardDefs from '../../assets/resourceCardDefs.json';
 import './card.css';
 
@@ -23,6 +22,9 @@ import victoryModalSrc from '../../assets/images/modals/victory.png';
 import gameOverModalSrc from '../../assets/images/modals/gameOver.png';
 
 import challengeDeckBack from '../../assets/images/challengeDeck.png';
+
+
+const exampleChallengeCardData = require('../../assets/exampleChallengeCardData.json');
 
 function getResourceImg (resource) {
     switch(resource) {
@@ -55,7 +57,7 @@ class Mission extends Component {
             drawDeck: [], //stack of cards
             resourcesPile: [], //arr of strings
             discardPile: [], //stack of cards
-            challengeDeck: exampleChallengeCardData,
+            challengeDeck: exampleChallengeCardData.reverse(),
             currentChallenge: null,
             showVictory: false,
             showDefeat: false,
@@ -309,7 +311,7 @@ class Mission extends Component {
                                 <img
                                     className="challengeDeck"
                                     disabled={!(challengeRequirements.length === 0 && challengeDeck.length > 0)}
-                                    onClick={()=>{this.drawNewChallenge()}}
+                                    onClick={()=>{if(currentChallenge === null) { this.drawNewChallenge()}}}
                                     src={challengeDeckBack}
                                 />
                                 <div className="mx-auto">{
