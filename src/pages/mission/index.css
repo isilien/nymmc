@@ -64,9 +64,13 @@
 }
 
 .drawDeck {
-    background: cornflowerblue;
-    color: white;
     margin-right: 20px;
+}
+
+.readyToDraw {
+    outline: 2px solid greenyellow;
+    outline-offset: 5px;
+    outline-style: dashed;
 }
 
 .discardPile {
@@ -97,6 +101,12 @@
 }
 
 .currentChallengeCard {
+}
+
+.discardButton {
+    border-radius: 90px;
+    height: 90px;
+    width: 90px;
 }
 
 .smooth-dnd-container.horizontal {

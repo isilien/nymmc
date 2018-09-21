@@ -22,7 +22,7 @@ import victoryModalSrc from '../../assets/images/modals/victory.png';
 import gameOverModalSrc from '../../assets/images/modals/gameOver.png';
 
 import challengeDeckBack from '../../assets/images/challengeDeck.png';
-
+import drawDeckBack from '../../assets/images/drawDeck.png';
 
 const exampleChallengeCardData = require('../../assets/exampleChallengeCardData.json');
 
@@ -93,7 +93,7 @@ class Mission extends Component {
     }
 
     onTimerEnd = () => {
-        this.setState({showDefeat: true})
+        this.setState({showDefeat: true, isPaused: true})
     }
 
     //from hand
@@ -251,7 +251,7 @@ class Mission extends Component {
         //try to draw a card from the challenge deck
         if(challengeDeck.length === 0){
             console.log('you win!')
-            this.setState({showVictory: true})
+            this.setState({showVictory: true, isPaused: true})
 
         } else {
             this.setState({currentChallenge: null, resourcesPile: []})
@@ -310,19 +310,19 @@ class Mission extends Component {
                         <div className="playArea">
                             <div className="row challengeDeckArea d-flex justify-content-between">
                                 <img
-                                    className="challengeDeck"
+                                    className={`challengeDeck ${currentChallenge === null ? 'readyToDraw' : ''}`}
                                     disabled={!(challengeRequirements.length === 0 && challengeDeck.length > 0)}
                                     onClick={()=>{if(currentChallenge === null) { this.drawNewChallenge()}}}
                                     src={challengeDeckBack}
                                 />
-                                <div className=" currentChallengeCard">{
+                                <div className="currentChallengeCard">{
                                     currentChallenge!==null ? <ChallengeCard {...currentChallenge} /> : null
                                 }</div>
                                 <div className="col-6">
                                 <div className="d-flex justify-content-center">
                                     <h2 style={{color: 'white'}}>Requirements</h2>
                                 </div>
-                                <div className="row requirementsArea d-flex justify-content-center">
+                                <div className={`row d-flex justify-content-center ${currentChallenge !== null ? 'requirementsArea' : ''}`}>
                                     <div className="requirements">
                                         {_.map(resourcesPile, (requirement, index) => {
                                             return <img className="resourceCard card paid" key={index} src={getResourceImg(requirement)}/>
@@ -337,14 +337,12 @@ class Mission extends Component {
                             </div>
                             
                             <div className="row handArea d-flex justify-content-between">
-                                <div 
-                                    className="drawDeck card"
+                                <img
+                                    src={drawDeckBack} 
+                                    className={`drawDeck challengeDeck ${hand.length <5 ? 'readyToDraw' : ''}`}
                                     onClick={ () => { if(hand.length <5) this.drawUpTo5(); }}
-                                >
-                                    Draw Deck: {drawDeck.length}
-                                    {hand.length < 5 ? 'Click to draw' : null}
-                                </div>
-                                <div className="hand">
+                                />
+                                <div className="hand align-self-center">
                                     {_.map(hand, (card, index) => {
                                         return (
                                             <div 
@@ -356,20 +354,22 @@ class Mission extends Component {
                                         )
                                     })}
                                 </div>
-                                    {isDiscarding ?
-                                    <button 
-                                        className="btn btn-danger"
-                                        onClick={()=>{this.setState({selectedCards: [], isDiscarding: false})}}
-                                    >
-                                        Cancel <i className="fas fa-times"/>
-                                    </button> :
-                                    <button 
-                                        className="btn btn-warning"
-                                        disabled={drawDeck.length === 0}
-                                        onClick={this.discardThenDraw}
-                                    >
-                                        Discard 3, Draw 3 <i className="fas fa-sync-alt"/>
-                                    </button>}
+                                    <div className="align-self-center mr-5">
+                                        {isDiscarding ?
+                                        <button 
+                                            className="discardButton btn-danger"
+                                            onClick={()=>{this.setState({selectedCards: [], isDiscarding: false})}}
+                                        >
+                                            Cancel <i className="fas fa-times"/>
+                                        </button> :
+                                        <button 
+                                            className={`discardButton btn-warning ${drawDeck.length ? '' : 'disabled'}`}
+                                            disabled={drawDeck.length === 0}
+                                            onClick={this.discardThenDraw}
+                                        >
+                                            Discard 3, Draw 3 <i className="fas fa-sync-alt"/>
+                                        </button>}
+                                    </div>
                             </div>
                         </div>
                         {showVictory || showDefeat ? 
