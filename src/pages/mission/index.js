@@ -319,9 +319,10 @@ class Mission extends Component {
                                     currentChallenge!==null ? <ChallengeCard {...currentChallenge} /> : null
                                 }</div>
                                 <div className="col-6">
+                                {currentChallenge !== null ? 
                                 <div className="d-flex justify-content-center">
                                     <h2 style={{color: 'white'}}>Requirements</h2>
-                                </div>
+                                </div> : null}
                                 <div className={`row d-flex justify-content-center ${currentChallenge !== null ? 'requirementsArea' : ''}`}>
                                     <div className="requirements">
                                         {_.map(resourcesPile, (requirement, index) => {
