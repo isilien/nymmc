@@ -68,7 +68,7 @@ class Mission extends Component {
         }
         this.discardThenDraw = this.discardThenDraw.bind(this)
 
-        this.state.drawDeck = this.initialDeck(50);
+        this.state.drawDeck = this.initialDeck(100);
     }
 
     componentDidMount () {
@@ -81,6 +81,7 @@ class Mission extends Component {
         for (let i = 0; i < size; i++) {
             deck.push(resourceCardDefs[getRandomIntInclusive(0, 2)]);
         }
+        console.log(_.countBy(deck,'resource'))
         return deck;
     }
 
@@ -297,17 +298,16 @@ class Mission extends Component {
         const challengeRequirements = currentChallenge ? this.getRemainingRequirements(currentChallenge.requirements, resourcesPile) : [];
 
         return (
-            <div className="">
+            <div className="playArea">
                 {hasStarted ? <MissionCountdown startCountdown={this.startCountdown}/> :
                     <div className="missionContent">
                             <Timer 
-                                className="missionClock"
                                 onPause={()=>{this.setState({isPaused: true})}}
                                 onPlay={()=>{this.setState({isPaused: false})}}
                                 updateRemainingTime={(time)=>{this.setState({timeRemaining: time})}}
                                 timeEnded={this.onTimerEnd}
                             />
-                        <div className="playArea">
+                        <div className="">
                             <div className="row challengeDeckArea d-flex justify-content-between">
                                 <img
                                     className={`challengeDeck ${currentChallenge === null ? 'readyToDraw' : ''}`}
@@ -357,17 +357,17 @@ class Mission extends Component {
                                     <div className="align-self-center mr-5">
                                         {isDiscarding ?
                                         <button 
-                                            className="discardButton btn-danger"
+                                            className="discardButton btn btn-danger"
                                             onClick={()=>{this.setState({selectedCards: [], isDiscarding: false})}}
                                         >
                                             Cancel <i className="fas fa-times"/>
                                         </button> :
                                         <button 
-                                            className={`discardButton btn-warning ${drawDeck.length ? '' : 'disabled'}`}
+                                            className={`discardButton btn btn-warning ${drawDeck.length ? '' : 'disabled'}`}
                                             disabled={drawDeck.length === 0}
                                             onClick={this.discardThenDraw}
                                         >
-                                            Discard 3, Draw 3 <i className="fas fa-sync-alt"/>
+                                            +3/-3 <i className="fas fa-sync-alt"/>
                                         </button>}
                                     </div>
                             </div>

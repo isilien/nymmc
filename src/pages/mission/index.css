@@ -18,15 +18,20 @@
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-.clock {
-    font-size: 36px;
-    color: red;
-    margin-left: 20px;
-}
-
 .timer {
     display: flex;
     justify-content: center;
+    padding-top: 20px;
+}
+
+.clock {
+    color: red;
+    font-size: 36px;
+}
+
+.playPauseBtn {
+    margin-left: 20px;
+    align-self: center  
 }
 
 .paid {

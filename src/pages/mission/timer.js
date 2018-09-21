@@ -64,14 +64,18 @@ class Timer extends Component {
         } = this.state;
         return (
             <div className="timer">
-                {
-                isPaused || !started ? 
-                    <button className="btn btn-secondary" onClick={this.startTimer}><i className="fas fa-play"/></button> : 
-                    <button className="btn btn-secondary" onClick={this.pauseTimer}><i className="fas fa-pause"/></button>
-                }
-                <div className="clock">{ 
-                    Math.floor(seconds/60)}:{seconds%60 < 10 ? `0${seconds%60}` : seconds%60 
-                }</div>
+                <div className="clock mt-1">
+                    { 
+                        Math.floor(seconds/60)}:{seconds%60 < 10 ? `0${seconds%60}` : seconds%60 
+                    }
+                </div>
+                <div className="playPauseBtn"> 
+                    { isPaused || !started ? 
+                        <button className="btn btn-secondary" onClick={this.startTimer}><i className="fas fa-play"/></button> : 
+                        <button className="btn btn-secondary" onClick={this.pauseTimer}><i className="fas fa-pause"/></button>
+                    }
+                </div>
+
             </div>
         )
   }
