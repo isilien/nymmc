@@ -307,14 +307,14 @@ class Mission extends Component {
                         <div className="playArea">
                             <div className="row challengeDeckArea">
                                 <img
-                                 className="challengeDeck"
+                                    className="challengeDeck"
                                     disabled={!(challengeRequirements.length === 0 && challengeDeck.length > 0)}
                                     onClick={()=>{this.drawNewChallenge()}}
                                     src={challengeDeckBack}
                                 />
-                                {
+                                <div className="mx-auto">{
                                     currentChallenge!==null ? <ChallengeCard {...currentChallenge} /> : null
-                                }
+                                }</div>
                             </div>
                             <div className="row requirementsArea d-flex justify-content-center">
                                 <div className="requirements">
