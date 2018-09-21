@@ -326,7 +326,7 @@ class Mission extends Component {
                             <div className="row  d-flex justify-content-center">
                                 {isDiscarding ?
                                 <button 
-                                    className="btn btn-warning"
+                                    className="btn btn-danger"
                                     onClick={()=>{this.setState({selectedCards: [], isDiscarding: false})}}
                                 >
                                     Cancel <i className="fas fa-times"/>
