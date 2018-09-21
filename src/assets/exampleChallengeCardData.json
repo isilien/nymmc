@@ -4,34 +4,34 @@
         "id": 0,
         "type": "challenge",
         "title": "Ops Example",
-        "src": "1.2.2.png",
+        "src": "1.2.2",
         "requirements": ["ops", "ops","ops"]
     },
     {
         "id": 1,
         "type": "challenge",
         "title": "Dev Example",
-        "src": "1.2.1.png",
+        "src": "1.2.1",
         "requirements": ["dev", "dev","dev"]
     },
     {
         "id": 2,
         "type": "challenge",
         "title": "UX Example",
-        "src": "1.1.3.png",
+        "src": "1.1.3",
         "requirements": ["UX", "UX","UX"]
     },
     {
         "id": 3,
         "type": "challenge",
         "title": "Huge Example",
-        "src": "1.1.2.png",
+        "src": "1.1.2",
         "requirements": ["UX","UX","UX","UX","UX","UX","UX","UX", "dev","ops"]
     },
     {
         "id": 4,
         "type": "challenge",
-        "src": "1.1.1.png",
+        "src": "1.1.1",
         "title": "Everything Example",
         "requirements": ["UX", "dev","ops"]
     }

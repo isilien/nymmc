@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './challengeCard.css'
 import _ from 'underscore';
 import constants from '../../modules/mission/constants';
-import cards from '../../assets/images/cards/**';
+import cards from '../../assets/images/challenges/*.png';
 
 //TODO: Move start button out
 class ChallengeCard extends Component {
@@ -30,13 +30,12 @@ class ChallengeCard extends Component {
         //TODO: use ID to get img?
         const {id, title, type, amount, src, requirements} = this.props;
         return (
-            <div className="challengeCard ">
-                <div className="cardTitle">{title}</div>
+            <div>
                 {
                     type === 'challenge' ?
-                    <img src={cards[`${src}.png`]}/> 
+                    <img className="challengeCard" src={cards[src]}/> 
                     // <div className="cardSymbols">{this.getSymbolsForRequirements(requirements)}</div>
-                    : <div>Discard {amount}</div>
+                    : <div  className="challengeCard">Discard {amount}</div>
                 }
             </div>
         )
