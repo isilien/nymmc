@@ -50,6 +50,11 @@
     flex-flow: row wrap;
 }
 
+.modal-graphic {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
 
 .challengeDeck {
     width: 166px;

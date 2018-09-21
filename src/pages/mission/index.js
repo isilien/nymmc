@@ -8,18 +8,21 @@ import { Container, Draggable } from 'react-smooth-dnd';
 import Timer from './timer';
 
 import MissionCountdown from './countdown';
-import actionCreators from '../../modules/mission/actions'
-import './index.css'
-import ChallengeCard from './challengeCard'
+import actionCreators from '../../modules/mission/actions';
+import './index.css';
+import ChallengeCard from './challengeCard';
 const exampleChallengeCardData =require('../../assets/exampleChallengeCardData.json');
-import resourceCardDefs from '../../assets/resourceCardDefs.json'
-import './card.css'
+import resourceCardDefs from '../../assets/resourceCardDefs.json';
+import './card.css';
 
-import devImgSrc from '../../assets/images/api.png'
-import UXImgSrc from '../../assets/images/ux.png'
-import opsImgSrc from '../../assets/images/ops.png'
+import devImgSrc from '../../assets/images/api.png';
+import UXImgSrc from '../../assets/images/ux.png';
+import opsImgSrc from '../../assets/images/ops.png';
 
-import challengeDeckBack from '../../assets/images/challengeDeck.png'
+import victoryModalSrc from '../../assets/images/modals/victory.png';
+import gameOverModalSrc from '../../assets/images/modals/gameOver.png';
+
+import challengeDeckBack from '../../assets/images/challengeDeck.png';
 
 function getResourceImg (resource) {
     switch(resource) {
@@ -366,7 +369,7 @@ class Mission extends Component {
                                 <div className="modal-dialog" role="document">
                                     <div className="modal-content">
                                         <div className="modal-body">
-                                            <p>{showVictory ? "Congrats! You did it!" : "Sorry, better luck next time!"}</p>
+                                            <img className="modal-graphic" src={showVictory ? victoryModalSrc : gameOverModalSrc}/>
                                         </div>
                                         <div className="modal-footer">
                                             <button onClick={console.log("redirect back to home")} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
