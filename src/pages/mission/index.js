@@ -19,6 +19,8 @@ import devImgSrc from '../../assets/images/api.png'
 import UXImgSrc from '../../assets/images/ux.png'
 import opsImgSrc from '../../assets/images/ops.png'
 
+import challengeDeckBack from '../../assets/images/challengeDeck.png'
+
 function getResourceImg (resource) {
     switch(resource) {
         case 'UX':
@@ -280,13 +282,12 @@ class Mission extends Component {
                             />
                         <div className="playArea">
                             <div className="row challengeDeckArea">
-                                <button
-                                    className="challengeDeck card"
+                                <img
+                                 className="challengeDeck"
                                     disabled={!(challengeRequirements.length === 0 && challengeDeck.length > 0)}
                                     onClick={()=>{this.drawNewChallenge()}}
-                                >
-                                    Challenge Deck: {challengeDeck.length}
-                                </button>
+                                    src={challengeDeckBack}
+                                />
                                 {
                                     currentChallenge!==null ? <ChallengeCard {...currentChallenge} /> : null
                                 }
@@ -294,7 +295,7 @@ class Mission extends Component {
                             <div className="row requirementsArea d-flex justify-content-center">
                                 <div className="requirements">
                                     {_.map(resourcesPile, (requirement, index) => {
-                                            return <div className="card paid" key={index}> {requirement} </div>
+                                        return <img className="resourceCard card paid" key={index} src={getResourceImg(requirement)}/>
                                     })}  
                                     { _.map(challengeRequirements, (requirement, index) => {
                                         return <img className="resourceCard card" key={index} src={getResourceImg(requirement)}/>

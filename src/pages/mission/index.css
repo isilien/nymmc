@@ -30,7 +30,10 @@
 }
 
 .paid {
-    background: gold;
+    width: 96px;
+    height: 128px;
+    filter: grayscale(0%);
+    background: white;
 }
 
 .playArea { 
@@ -49,7 +52,8 @@
 
 
 .challengeDeck {
-    background: brown;
+    width: 166px;
+    height: 256px;
     color: white;
     margin-right: 20px;
 }
