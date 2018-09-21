@@ -158,15 +158,16 @@ class Mission extends Component {
     //side FX
     discardThenDraw = (e, amount = 3) => {
         if(this.state.isPaused) return;
-        this.moveCards(amount, 'hand', 'discardPile')
-        this.moveCards(amount, 'drawDeck', 'hand')
+        this.setState({isDiscarding: true})
     }
 
     selectedCard = (group, card, index) => {
 
-        if (this.state.isPaused || this.state.currentChallenge === null) return;
-        if (this.state.currentChallenge.type === 'discard'){
-            let {selectedCards} = this.state;
+        const {hand, isDiscarding, isPaused, currentChallenge} = this.state;
+        let {selectedCards} = this.state;
+
+        if (isPaused || currentChallenge === null) return;
+        if (currentChallenge.type === 'discard' && isDiscarding === false){
             if(_.contains(selectedCards, index)){
                 selectedCards = _.without(selectedCards, index)
             } else {
@@ -176,6 +177,25 @@ class Mission extends Component {
 
            setTimeout(this.checkChallengeComplete(), 100);
 
+        } else if (isDiscarding) {
+            if(_.contains(selectedCards, index)){
+                selectedCards = _.without(selectedCards, index)
+            } else {
+                selectedCards.push(index)
+            }
+
+            if(selectedCards.length === 3) {
+                this.setState({
+                    selectedCards: [], 
+                    hand: hand.filter((card, index)=>{
+                        return !_.contains(selectedCards,index)
+                    }),
+                    isDiscarding: false
+                })
+
+            } else {
+                this.setState({selectedCards: selectedCards})
+            }
         } else {
             this.playResource(card, index);
         }
@@ -258,6 +278,7 @@ class Mission extends Component {
             drawDeck,
             resourcesPile,
             discardPile,
+            isDiscarding,
             challengeDeck,
             selectedCards,
             showVictory,
@@ -303,13 +324,20 @@ class Mission extends Component {
                                 </div>
                             </div>
                             <div className="row  d-flex justify-content-center">
-                                <div 
+                                {isDiscarding ?
+                                <button 
+                                    className="btn btn-warning"
+                                    onClick={()=>{this.setState({selectedCards: [], isDiscarding: false})}}
+                                >
+                                    Cancel <i className="fas fa-times"/>
+                                </button> :
+                                <button 
                                     className="btn btn-warning"
                                     disabled={drawDeck.length === 0}
                                     onClick={this.discardThenDraw}
                                 >
                                     Discard 3, Draw 3 <i className="fas fa-sync-alt"/>
-                                </div>
+                                </button>}
                             </div>
                             <div className="row handArea">
                                 <div 
