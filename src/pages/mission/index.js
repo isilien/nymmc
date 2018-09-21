@@ -2,7 +2,7 @@ import _ from 'underscore'
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Countdown from 'react-countdown-now';
 import { Container, Draggable } from 'react-smooth-dnd';
 import Timer from './timer';
@@ -58,6 +58,7 @@ class Mission extends Component {
             resourcesPile: [], //arr of strings
             discardPile: [], //stack of cards
             challengeDeck: exampleChallengeCardData.reverse(),
+            timeRemaining: 600,
             currentChallenge: null,
             showVictory: false,
             showDefeat: false,
@@ -81,7 +82,6 @@ class Mission extends Component {
         for (let i = 0; i < size; i++) {
             deck.push(resourceCardDefs[getRandomIntInclusive(0, 2)]);
         }
-        console.log(_.countBy(deck,'resource'))
         return deck;
     }
 
@@ -284,6 +284,7 @@ class Mission extends Component {
             drawDeck,
             resourcesPile,
             discardPile,
+            timeRemaining,
             isDiscarding,
             challengeDeck,
             selectedCards,
@@ -377,11 +378,14 @@ class Mission extends Component {
                             <div className="modal" tabIndex="-1" role="dialog">
                                 <div className="modal-dialog" role="document">
                                     <div className="modal-content">
+                                        <div className="modal-header">
+                                        Your Time: {timeRemaining}
+                                        </div>
                                         <div className="modal-body">
                                             <img className="modal-graphic" src={showVictory ? victoryModalSrc : gameOverModalSrc}/>
                                         </div>
                                         <div className="modal-footer">
-                                            <button onClick={console.log("redirect back to home")} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button onClick={()=>{window.location = '/'}} type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
