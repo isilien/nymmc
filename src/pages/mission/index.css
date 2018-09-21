@@ -96,7 +96,10 @@
     margin: 20px;
 }
 
+.currentChallengeCard {
+}
+
 .smooth-dnd-container.horizontal {
-     display: flex;
+    display: flex;
     flex-flow: row wrap; 
 }

@@ -28,13 +28,12 @@ class ChallengeCard extends Component {
 
     render() {
         //TODO: use ID to get img?
-        const {id, title, type, amount, src, requirements} = this.props;
+        const {type, amount, src} = this.props;
         return (
             <div>
                 {
                     type === 'challenge' ?
                     <img className="challengeCard" src={cards[src]}/> 
-                    // <div className="cardSymbols">{this.getSymbolsForRequirements(requirements)}</div>
                     : <div  className="challengeCard">Discard {amount}</div>
                 }
             </div>
@@ -43,9 +42,9 @@ class ChallengeCard extends Component {
 }
 
 ChallengeCard.propTypes = {
-    id : PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    title : PropTypes.string,
-    requirements : PropTypes.array
+    src : PropTypes.string,
+    type : PropTypes.string,
+    amount : PropTypes.string,
 }
 
 export default ChallengeCard;

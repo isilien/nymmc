@@ -297,54 +297,46 @@ class Mission extends Component {
         const challengeRequirements = currentChallenge ? this.getRemainingRequirements(currentChallenge.requirements, resourcesPile) : [];
 
         return (
-            <div className="container">
+            <div className="">
                 {hasStarted ? <MissionCountdown startCountdown={this.startCountdown}/> :
                     <div className="missionContent">
                             <Timer 
+                                className="missionClock"
                                 onPause={()=>{this.setState({isPaused: true})}}
                                 onPlay={()=>{this.setState({isPaused: false})}}
                                 updateRemainingTime={(time)=>{this.setState({timeRemaining: time})}}
                                 timeEnded={this.onTimerEnd}
                             />
                         <div className="playArea">
-                            <div className="row challengeDeckArea">
+                            <div className="row challengeDeckArea d-flex justify-content-between">
                                 <img
                                     className="challengeDeck"
                                     disabled={!(challengeRequirements.length === 0 && challengeDeck.length > 0)}
                                     onClick={()=>{if(currentChallenge === null) { this.drawNewChallenge()}}}
                                     src={challengeDeckBack}
                                 />
-                                <div className="mx-auto">{
+                                <div className=" currentChallengeCard">{
                                     currentChallenge!==null ? <ChallengeCard {...currentChallenge} /> : null
                                 }</div>
-                            </div>
-                            <div className="row requirementsArea d-flex justify-content-center">
-                                <div className="requirements">
-                                    {_.map(resourcesPile, (requirement, index) => {
-                                        return <img className="resourceCard card paid" key={index} src={getResourceImg(requirement)}/>
-                                    })}  
-                                    { _.map(challengeRequirements, (requirement, index) => {
-                                        return <img className="resourceCard card" key={index} src={getResourceImg(requirement)}/>
-                                    })} 
+                                <div className="col-6">
+                                <div className="d-flex justify-content-center">
+                                    <h2 style={{color: 'white'}}>Requirements</h2>
                                 </div>
+                                <div className="row requirementsArea d-flex justify-content-center">
+                                    <div className="requirements">
+                                        {_.map(resourcesPile, (requirement, index) => {
+                                            return <img className="resourceCard card paid" key={index} src={getResourceImg(requirement)}/>
+                                        })}  
+                                        { _.map(challengeRequirements, (requirement, index) => {
+                                            return <img className="resourceCard card" key={index} src={getResourceImg(requirement)}/>
+                                        })} 
+                                    </div>
+                                </div>
+                                
                             </div>
-                            <div className="row  d-flex justify-content-center">
-                                {isDiscarding ?
-                                <button 
-                                    className="btn btn-danger"
-                                    onClick={()=>{this.setState({selectedCards: [], isDiscarding: false})}}
-                                >
-                                    Cancel <i className="fas fa-times"/>
-                                </button> :
-                                <button 
-                                    className="btn btn-warning"
-                                    disabled={drawDeck.length === 0}
-                                    onClick={this.discardThenDraw}
-                                >
-                                    Discard 3, Draw 3 <i className="fas fa-sync-alt"/>
-                                </button>}
                             </div>
-                            <div className="row handArea">
+                            
+                            <div className="row handArea d-flex justify-content-between">
                                 <div 
                                     className="drawDeck card"
                                     onClick={ () => { if(hand.length <5) this.drawUpTo5(); }}
@@ -364,6 +356,20 @@ class Mission extends Component {
                                         )
                                     })}
                                 </div>
+                                    {isDiscarding ?
+                                    <button 
+                                        className="btn btn-danger"
+                                        onClick={()=>{this.setState({selectedCards: [], isDiscarding: false})}}
+                                    >
+                                        Cancel <i className="fas fa-times"/>
+                                    </button> :
+                                    <button 
+                                        className="btn btn-warning"
+                                        disabled={drawDeck.length === 0}
+                                        onClick={this.discardThenDraw}
+                                    >
+                                        Discard 3, Draw 3 <i className="fas fa-sync-alt"/>
+                                    </button>}
                             </div>
                         </div>
                         {showVictory || showDefeat ? 
