@@ -29,7 +29,7 @@ class MissionCountdown extends Component {
                     <button className="btn btn-success" onClick={this.beginCountdown} >
                         Start Mission
                     </button>
-                    : <div className="modal" tabIndex="-1" role="dialog">
+                    : <div className="modal" tabIndex="-1" role="dialog"  style={{color: 'black'}}>
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-body">

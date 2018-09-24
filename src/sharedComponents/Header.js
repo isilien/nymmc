@@ -6,7 +6,7 @@ class Header extends Component {
         return (
             <div className="my-3">
                 <h1>
-                    <Link to="/" style={{color: 'black'}}>5-Minute Mission Control</Link>
+                    <Link to="/">5-Minute Mission Control</Link>
                 </h1>
                 <hr/>
             </div>

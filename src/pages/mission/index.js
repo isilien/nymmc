@@ -269,7 +269,6 @@ class Mission extends Component {
     }
 
     render() {
-        const { id } = this.props.match.params;
         const {
             hasStarted,
             currentChallenge,
@@ -292,7 +291,7 @@ class Mission extends Component {
         const challengeRequirements = currentChallenge ? this.getRemainingRequirements(currentChallenge.requirements, resourcesPile) : [];
 
         return (
-            <div> {hasStarted !== false ? <MissionCountdown startCountdown={this.startCountdown}/> :
+            <div> {hasStarted === false ? <MissionCountdown startCountdown={this.startCountdown}/> :
                 <div className="playArea">
                     <div className="missionContent">
                         <Timer 
@@ -301,7 +300,7 @@ class Mission extends Component {
                             updateRemainingTime={(time)=> { if(!isPaused){this.setState({timeRemaining: time})}}}
                             timeEnded={this.onTimerEnd}
                         />
-                        <div className="row challengeDeckArea d-flex justify-content-between">
+                        <div className="row d-flex justify-content-between">
                             <img
                                 className={`challengeDeck ${currentChallenge === null ? 'readyToDraw' : ''}`}
                                 title="Challenge Deck"
@@ -328,23 +327,26 @@ class Mission extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="row handArea d-flex justify-content-between  align-items-center">
-                                { drawDeck.length > 0 ? 
-                                    <img
-                                        src={drawDeckBack} 
-                                        className={`drawDeck challengeDeck ${hand.length <5 ? 'readyToDraw' : ''}`}
-                                        title="Resources Deck"
-                                        onClick={ () => { if(hand.length <5) this.drawUpTo5(); }}
-                                    /> : 
-                                    <button 
-                                        onClick={()=>window.location=window.location}
-                                        className="card"
-                                        style={{border: "2px white dashed", background: 'transparent', color: 'white'}}
-                                    >
-                                    <br/><p>No cards left!<br/><br/>
-                                       Click here to restart</p>
-                                    </button>
-                                }
+                            <div className="row d-flex justify-content-between align-items-end">
+                                <div className="ml-3">
+                                    {
+                                        drawDeck.length > 0 ? 
+                                        <img
+                                            src={drawDeckBack} 
+                                            className={`drawDeck challengeDeck ${hand.length <5 ? 'readyToDraw' : ''}`}
+                                            title="Resources Deck"
+                                            onClick={ () => { if(hand.length <5) this.drawUpTo5(); }}
+                                        /> : 
+                                        <button 
+                                            onClick={()=>window.location=window.location}
+                                            className="card"
+                                            style={{border: "2px white dashed", background: 'transparent', color: 'white'}}
+                                        >
+                                        <br/><p>No cards left!<br/><br/>
+                                        Click here to restart</p>
+                                        </button>
+                                    }
+                                </div>
                                 <div className="hand ml-5">
                                     {_.map(hand, (card, index) => {
                                         return (
@@ -377,7 +379,7 @@ class Mission extends Component {
                             </div>
                         </div>
                         { showVictory || showDefeat ? 
-                            <div className="modal" tabIndex="-1" role="dialog">
+                            <div className="modal" tabIndex="-1" role="dialog" style={{color: 'black'}}>
                                 <div className="modal-dialog" role="document">
                                     <div className="modal-content">
                                         <div className="modal-header">
