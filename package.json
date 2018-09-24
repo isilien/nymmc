@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "parcel": "parcel src/index.html",
+    "parcel": "parcel --no-cache src/index.html",
     "build": "parcel build src/index.html"
   },
   "dependencies": {
