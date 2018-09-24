@@ -1,9 +1,6 @@
 import _ from 'underscore'
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment'
-import { Link, Redirect } from 'react-router-dom';
-import Countdown from 'react-countdown-now';
 import { Container, Draggable } from 'react-smooth-dnd';
 import Timer from './timer';
 
@@ -56,7 +53,6 @@ class Mission extends Component {
             hand: [], //array of resource and event cards
             drawDeck: [], //stack of cards
             resourcesPile: [], //arr of strings
-            discardPile: [], //stack of cards
             challengeDeck: challengeDeckSrc[props.match.params.id].reverse(),
             timeRemaining: 600,
             currentChallenge: null,
@@ -67,7 +63,6 @@ class Mission extends Component {
             bonusChallenge: null,
             bonusResourcePile: [],
         }
-        this.discardThenDraw = this.discardThenDraw.bind(this)
 
         this.state.drawDeck = this.initialDeck(100);
     }
@@ -162,7 +157,7 @@ class Mission extends Component {
     }
 
     //side FX
-    discardThenDraw = (e, amount = 3) => {
+    discardThenDraw = () => {
         if(this.state.isPaused) return;
         this.setState({isDiscarding: true})
     }
@@ -279,11 +274,9 @@ class Mission extends Component {
             hasStarted,
             currentChallenge,
             isPaused,
-            endTime,
             hand,
             drawDeck,
             resourcesPile,
-            discardPile,
             timeRemaining,
             isDiscarding,
             challengeDeck,
@@ -299,27 +292,27 @@ class Mission extends Component {
         const challengeRequirements = currentChallenge ? this.getRemainingRequirements(currentChallenge.requirements, resourcesPile) : [];
 
         return (
-            <div className="playArea">
-                {hasStarted ? <MissionCountdown startCountdown={this.startCountdown}/> :
+            <div> {hasStarted !== false ? <MissionCountdown startCountdown={this.startCountdown}/> :
+                <div className="playArea">
                     <div className="missionContent">
-                            <Timer 
-                                onPause={()=>{this.setState({isPaused: true})}}
-                                onPlay={()=>{this.setState({isPaused: false})}}
-                                updateRemainingTime={(time)=> { if(!isPaused){this.setState({timeRemaining: time})}}}
-                                timeEnded={this.onTimerEnd}
+                        <Timer 
+                            onPause={()=>{this.setState({isPaused: true})}}
+                            onPlay={()=>{this.setState({isPaused: false})}}
+                            updateRemainingTime={(time)=> { if(!isPaused){this.setState({timeRemaining: time})}}}
+                            timeEnded={this.onTimerEnd}
+                        />
+                        <div className="row challengeDeckArea d-flex justify-content-between">
+                            <img
+                                className={`challengeDeck ${currentChallenge === null ? 'readyToDraw' : ''}`}
+                                title="Challenge Deck"
+                                disabled={!(challengeRequirements.length === 0 && challengeDeck.length > 0)}
+                                onClick={()=>{if(currentChallenge === null) { this.drawNewChallenge()}}}
+                                src={challengeDeckBack}
                             />
-                        <div className="">
-                            <div className="row challengeDeckArea d-flex justify-content-between">
-                                <img
-                                    className={`challengeDeck ${currentChallenge === null ? 'readyToDraw' : ''}`}
-                                    disabled={!(challengeRequirements.length === 0 && challengeDeck.length > 0)}
-                                    onClick={()=>{if(currentChallenge === null) { this.drawNewChallenge()}}}
-                                    src={challengeDeckBack}
-                                />
-                                <div className="currentChallengeCard">{
-                                    currentChallenge!==null ? <ChallengeCard {...currentChallenge} /> : null
-                                }</div>
-                                <div className="col-6">
+                            <div className="currentChallengeCard">
+                                {currentChallenge!==null ? <ChallengeCard {...currentChallenge} /> : null}
+                            </div>
+                            <div className="col-6">
                                 {currentChallenge !== null ? 
                                 <div className="d-flex justify-content-center">
                                     <h2 style={{color: 'white'}}>Requirements</h2>
@@ -334,17 +327,25 @@ class Mission extends Component {
                                         })} 
                                     </div>
                                 </div>
-                                
                             </div>
-                            </div>
-                            
-                            <div className="row handArea d-flex justify-content-between">
-                                <img
-                                    src={drawDeckBack} 
-                                    className={`drawDeck challengeDeck ${hand.length <5 ? 'readyToDraw' : ''}`}
-                                    onClick={ () => { if(hand.length <5) this.drawUpTo5(); }}
-                                />
-                                <div className="hand align-self-center">
+                            <div className="row handArea d-flex justify-content-between  align-items-center">
+                                { drawDeck.length > 0 ? 
+                                    <img
+                                        src={drawDeckBack} 
+                                        className={`drawDeck challengeDeck ${hand.length <5 ? 'readyToDraw' : ''}`}
+                                        title="Resources Deck"
+                                        onClick={ () => { if(hand.length <5) this.drawUpTo5(); }}
+                                    /> : 
+                                    <button 
+                                        onClick={()=>window.location=window.location}
+                                        className="card"
+                                        style={{border: "2px white dashed", background: 'transparent', color: 'white'}}
+                                    >
+                                    <br/><p>No cards left!<br/><br/>
+                                       Click here to restart</p>
+                                    </button>
+                                }
+                                <div className="hand ml-5">
                                     {_.map(hand, (card, index) => {
                                         return (
                                             <div 
@@ -356,8 +357,8 @@ class Mission extends Component {
                                         )
                                     })}
                                 </div>
-                                    <div className="align-self-center mr-5">
-                                        {isDiscarding ?
+                                <div className="ml-5">
+                                    { isDiscarding ?
                                         <button 
                                             className="discardButton btn btn-danger"
                                             onClick={()=>{this.setState({selectedCards: [], isDiscarding: false})}}
@@ -370,16 +371,17 @@ class Mission extends Component {
                                             onClick={this.discardThenDraw}
                                         >
                                             +3/-3 <i className="fas fa-sync-alt"/>
-                                        </button>}
-                                    </div>
+                                        </button>
+                                    }
+                                </div>
                             </div>
                         </div>
-                        {showVictory || showDefeat ? 
+                        { showVictory || showDefeat ? 
                             <div className="modal" tabIndex="-1" role="dialog">
                                 <div className="modal-dialog" role="document">
                                     <div className="modal-content">
                                         <div className="modal-header">
-                                        Your Time: {timeRemaining}
+                                        Your Time: {Math.floor(timeRemaining/60)}:{timeRemaining%60 < 10 ? `0${timeRemaining%60}` : timeRemaining%60 }
                                         </div>
                                         <div className="modal-body">
                                             <img className="modal-graphic" src={showVictory ? victoryModalSrc : gameOverModalSrc}/>
@@ -392,7 +394,8 @@ class Mission extends Component {
                             </div> : null
                         }
                     </div>
-                }
+                </div>
+            }
             </div>
         );
     }
