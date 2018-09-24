@@ -13,8 +13,8 @@ class Home extends Component {
                     <Link className="btn btn-primary btn-block" to="/tutorial">Tutorial</Link>
                     <div className="btn-group-vertical btn-block my-3">
                         <Link className="btn btn-success" to="/mission/1">Baby's First Launch</Link>
-                        <Link className="btn btn-secondary disabled" to="/mission/2">Megalaunch</Link>
-                        <Link className="btn btn-secondary disabled" to="/mission/3">The Final Frontier</Link>
+                        <Link className="btn btn-warning" to="/mission/2">Megalaunch</Link>
+                        <Link className="btn btn-danger" to="/mission/3">The Final Frontier</Link>
                     </div>
                 </div>
             </div>

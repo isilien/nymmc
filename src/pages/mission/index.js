@@ -24,7 +24,7 @@ import gameOverModalSrc from '../../assets/images/modals/gameOver.png';
 import challengeDeckBack from '../../assets/images/challengeDeck.png';
 import drawDeckBack from '../../assets/images/drawDeck.png';
 
-const exampleChallengeCardData = require('../../assets/exampleChallengeCardData.json');
+const challengeDeckSrc = require('../../assets/challengeDeck.json');
 
 function getResourceImg (resource) {
     switch(resource) {
@@ -57,7 +57,7 @@ class Mission extends Component {
             drawDeck: [], //stack of cards
             resourcesPile: [], //arr of strings
             discardPile: [], //stack of cards
-            challengeDeck: exampleChallengeCardData.reverse(),
+            challengeDeck: challengeDeckSrc[props.match.params.id].reverse(),
             timeRemaining: 600,
             currentChallenge: null,
             showVictory: false,
@@ -292,7 +292,7 @@ class Mission extends Component {
             showDefeat,
         } = this.state;
 
-        if(!exampleChallengeCardData) {
+        if(!challengeDeckSrc) {
             return <div>Loading...</div>
         }
 
@@ -305,7 +305,7 @@ class Mission extends Component {
                             <Timer 
                                 onPause={()=>{this.setState({isPaused: true})}}
                                 onPlay={()=>{this.setState({isPaused: false})}}
-                                updateRemainingTime={(time)=>{this.setState({timeRemaining: time})}}
+                                updateRemainingTime={(time)=> { if(!isPaused){this.setState({timeRemaining: time})}}}
                                 timeEnded={this.onTimerEnd}
                             />
                         <div className="">
