@@ -26,6 +26,15 @@
         },
         {
             "type": "challenge",
+            "src": "1.1",
+            "requirements": [
+                "ops",
+                "ops",
+                "ops"
+            ]
+        },
+        {
+            "type": "challenge",
             "src": "1.2.1",
             "requirements": [
                 "dev",
@@ -37,6 +46,15 @@
             "src": "1.2.2",
             "requirements": [
                 "dev",
+                "dev"
+            ]
+        },
+        {
+            "type": "challenge",
+            "src": "1.2",
+            "requirements": [
+                "dev",
+                "ops",
                 "dev"
             ]
         },
@@ -62,6 +80,19 @@
             "requirements": [
                 "ops",
                 "ops"
+            ]
+        },
+        {
+            "type": "challenge",
+            "src": "1.3",
+            "requirements": [
+                "ops",
+                "ops",
+                "ops",
+                "dev",
+                "dev",
+                "UX",
+                "UX"
             ]
         }
     ],
