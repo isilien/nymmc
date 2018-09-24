@@ -339,11 +339,10 @@ class Mission extends Component {
                                         /> : 
                                         <button 
                                             onClick={()=>window.location=window.location}
-                                            className="card"
-                                            style={{border: "2px white dashed", background: 'transparent', color: 'white'}}
+                                            className="emptyDrawDeck"
                                         >
-                                        <br/><p>No cards left!<br/><br/>
-                                        Click here to restart</p>
+                                            <br/><p>No cards left!<br/><br/>
+                                            Click here to restart</p>
                                         </button>
                                     }
                                 </div>

@@ -64,7 +64,6 @@
     height: 100%;
 }
 
-
 .challengeDeck {
     width: 166px;
     height: 256px;
@@ -84,15 +83,16 @@
     filter: grayscale(0%)
 }
 
-.discardPile {
-    width: 150px;
-    height: 200px;
-    border: solid black 1px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-}
+.emptyDrawDeck {
+    border: 2px white dashed;
+    background: transparent;
+    color: white;
+    width: 166px;
+    height: 256px;
+    margin-right: 20px;
+    border-radius: 10px;
 
+}
 
 .handArea {
     margin: 20px;
