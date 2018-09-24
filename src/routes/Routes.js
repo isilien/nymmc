@@ -31,7 +31,11 @@ class Routes extends Component {
         )
         return (
             <ConnectedRouter history={history}>
-                <div className="container"><Header/>{routes}<Footer/></div>
+                <div className="container">
+                    <Header/>
+                    {routes}
+                    <Footer/>
+                </div>
             </ConnectedRouter>
         );
     }

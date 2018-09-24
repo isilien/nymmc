@@ -297,10 +297,10 @@ class Mission extends Component {
                         <Timer 
                             onPause={()=>{this.setState({isPaused: true})}}
                             onPlay={()=>{this.setState({isPaused: false})}}
-                            updateRemainingTime={(time)=> { if(!isPaused){this.setState({timeRemaining: time})}}}
+                            updateRemainingTime={(time)=> { if(!isPaused) {this.setState({timeRemaining: time})}}}
                             timeEnded={this.onTimerEnd}
                         />
-                        <div className="row d-flex justify-content-between">
+                        <div className="row d-flex justify-content-between align-items-top">
                             <img
                                 className={`challengeDeck ${currentChallenge === null ? 'readyToDraw' : ''}`}
                                 title="Challenge Deck"
@@ -327,7 +327,7 @@ class Mission extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="row d-flex justify-content-between align-items-end">
+                            <div className="row d-flex justify-content-between align-items-center mt-5">
                                 <div className="ml-3">
                                     {
                                         drawDeck.length > 0 ? 

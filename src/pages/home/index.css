@@ -1,4 +1,3 @@
 .homeContainer {
-    margin-left: 48px;
-    background: green;
+    min-height: 600px;
 }

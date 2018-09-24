@@ -1,1 +1,10 @@
-.wrapper{position:fixed;bottom:0px;width:100%;}
+.wrapper
+{
+    position:fixed;
+    bottom:0px;
+    width:100%;
+}
+
+.footer {
+    padding-top: 60px;
+}

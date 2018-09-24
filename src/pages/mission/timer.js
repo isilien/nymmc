@@ -64,7 +64,7 @@ class Timer extends Component {
         } = this.state;
         return (
             <div className="timer">
-                <div className="clock mt-1">
+                <div className="clock mt-1 mb-3">
                     { 
                         Math.floor(seconds/60)}:{seconds%60 < 10 ? `0${seconds%60}` : seconds%60 
                     }
