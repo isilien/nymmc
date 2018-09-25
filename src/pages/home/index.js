@@ -14,9 +14,9 @@ class Home extends Component {
                 <div className="col-6 mx-auto">
                     {/* <Link className="btn btn-primary btn-block" to="/tutorial">Tutorial</Link> */}
                     <div className="btn-group-vertical btn-block mt-3">
-                        <Link className="btn btn-success" to="/mission/1">Mission 1: Baby's First Launch</Link>
-                        <Link className="btn btn-warning" to="/mission/2">Mission 2: MEGALAUNCH</Link>
-                        <Link className="btn btn-danger" to="/mission/3">Mission 3: The Final Frontier</Link>
+                        <Link className="btn btn-success" to="/mission/1">Level 1: Baby's First Launch</Link>
+                        <Link className="btn btn-warning" to="/mission/2">Level 2: MEGALAUNCH</Link>
+                        <Link className="btn btn-danger" to="/mission/3">Level 3: Next Generation</Link>
                     </div>
                 </div>
             </div>
