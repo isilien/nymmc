@@ -294,7 +294,7 @@ class Mission extends Component {
         const challengeRequirements = currentChallenge ? this.getRemainingRequirements(currentChallenge.requirements, resourcesPile) : [];
 
         return (
-            <div> {hasStarted !== false ? <MissionCountdown startCountdown={this.startCountdown}/> :
+            <div> {hasStarted === false ? <MissionCountdown startCountdown={this.startCountdown}/> :
                 <div className="playArea">
                     <div className="missionContent">
                         <Timer 
