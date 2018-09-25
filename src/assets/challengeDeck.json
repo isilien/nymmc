@@ -123,6 +123,18 @@
         },
         {
             "type": "challenge",
+            "src": "2.1",
+            "requirements": [
+                "ops",
+                "UX",
+                "UX",
+                "dev",
+                "dev",
+                "dev"
+            ]
+        },
+        {
+            "type": "challenge",
             "src": "2.2.1",
             "requirements": [
                 "ops",
@@ -159,6 +171,18 @@
         },
         {
             "type": "challenge",
+            "src": "2.2",
+            "requirements": [
+                "UX",
+                "UX",
+                "dev",
+                "ops",
+                "ops",
+                "ops"
+            ]
+        },
+        {
+            "type": "challenge",
             "src": "2.3.1",
             "requirements": [
                 "dev",
@@ -182,6 +206,22 @@
                 "dev",
                 "UX",
                 "UX"
+            ]
+        },
+        {
+            "type": "challenge",
+            "src": "2.3",
+            "requirements": [
+                "dev",
+                "dev",
+                "dev",
+                "dev",
+                "dev",
+                "dev",
+                "dev",
+                "ops",
+                "ops",
+                "ops"
             ]
         }
     ],
@@ -218,6 +258,18 @@
         },
         {
             "type": "challenge",
+            "src": "3.1",
+            "requirements": [
+                "UX",
+                "UX",
+                "dev",
+                "dev",
+                "ops",
+                "ops"
+            ]
+        },
+        {
+            "type": "challenge",
             "src": "3.2.1",
             "requirements": [
                 "ops",
@@ -246,6 +298,18 @@
         },
         {
             "type": "challenge",
+            "src": "3.2",
+            "requirements": [
+                "dev",
+                "dev",
+                "dev",
+                "UX",
+                "ops",
+                "ops"
+            ]
+        },
+        {
+            "type": "challenge",
             "src": "3.3.1",
             "requirements": [
                 "dev",
@@ -270,6 +334,18 @@
             "type": "challenge",
             "src": "3.3.3",
             "requirements": [
+                "ops",
+                "UX",
+                "dev",
+                "dev",
+                "dev"
+            ]
+        },
+        {
+            "type": "challenge",
+            "src": "3.3",
+            "requirements": [
+                "ops",
                 "ops",
                 "UX",
                 "dev",
