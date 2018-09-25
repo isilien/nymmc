@@ -104,13 +104,9 @@
     margin: 20px;
 }
 
-.currentChallengeCard {
-}
-
 .discardButton {
-    border-radius: 90px;
-    height: 90px;
-    width: 90px;
+    height: 256px;
+    width: 256px;
 }
 
 .smooth-dnd-container.horizontal {

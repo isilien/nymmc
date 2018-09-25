@@ -22,6 +22,7 @@ import challengeDeckBack from '../../assets/images/challengeDeck.png';
 import drawDeckBack from '../../assets/images/drawDeck.png';
 
 const challengeDeckSrc = require('../../assets/challengeDeck.json');
+import discardButtonSrc from '../../assets/images/discardDraw.png';
 
 function getResourceImg (resource) {
     switch(resource) {
@@ -291,7 +292,7 @@ class Mission extends Component {
         const challengeRequirements = currentChallenge ? this.getRemainingRequirements(currentChallenge.requirements, resourcesPile) : [];
 
         return (
-            <div> {hasStarted === false ? <MissionCountdown startCountdown={this.startCountdown}/> :
+            <div> {hasStarted !== false ? <MissionCountdown startCountdown={this.startCountdown}/> :
                 <div className="playArea">
                     <div className="missionContent">
                         <Timer 
@@ -360,19 +361,17 @@ class Mission extends Component {
                                 </div>
                                 <div className="ml-5">
                                     { isDiscarding ?
-                                        <button 
-                                            className="discardButton btn btn-danger"
+                                        <img 
+                                            src={discardButtonSrc} 
+                                            className="discardButton"
                                             onClick={()=>{this.setState({selectedCards: [], isDiscarding: false})}}
-                                        >
-                                            Cancel <i className="fas fa-times"/>
-                                        </button> :
-                                        <button 
-                                            className={`discardButton btn btn-warning ${drawDeck.length ? '' : 'disabled'}`}
+                                        /> :
+                                        <img 
+                                            src={discardButtonSrc}
+                                            className={`discardButton  ${drawDeck.length ? '' : 'disabled'}`}
                                             disabled={drawDeck.length === 0}
                                             onClick={this.discardThenDraw}
-                                        >
-                                            +3/-3 <i className="fas fa-sync-alt"/>
-                                        </button>
+                                        />
                                     }
                                 </div>
                             </div>
