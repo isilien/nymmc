@@ -24,6 +24,8 @@ import drawDeckBack from '../../assets/images/drawDeck.png';
 const challengeDeckSrc = require('../../assets/challengeDeck.json');
 import discardButtonSrc from '../../assets/images/discardDraw.png';
 
+import cancelDiscardSrc from '../../assets/images/cancel.png';
+
 function getResourceImg (resource) {
     switch(resource) {
         case 'UX':
@@ -362,7 +364,7 @@ class Mission extends Component {
                                 <div className="ml-5">
                                     { isDiscarding ?
                                         <img 
-                                            src={discardButtonSrc} 
+                                            src={cancelDiscardSrc} 
                                             className="discardButton"
                                             onClick={()=>{this.setState({selectedCards: [], isDiscarding: false})}}
                                         /> :
